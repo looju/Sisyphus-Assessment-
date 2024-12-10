@@ -17,7 +17,7 @@ export function ThemedView({
 
   return (
     <View
-      style={[{ backgroundColor: color == "dark" ? "#fff" : "#000" }, style]}
+      style={[{ backgroundColor: color == "dark" ? "#000" : "#fff" }, style]}
       {...otherProps}
     />
   );

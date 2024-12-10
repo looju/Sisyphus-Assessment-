@@ -5,18 +5,47 @@ import {
   useColorScheme,
   Image,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useHeaderHeight } from "@react-navigation/elements";
+import { useNavigation } from "expo-router";
 
 const CustomHeader = () => {
+  const headerHeight = useHeaderHeight();
+  const navigation = useNavigation();
   return (
-    <View style={styles.main}>
-      <Text style={{ color: "#fff" }}>hiii</Text>
-      <Text style={{ color: "#fff" }}>hiii</Text>
-    </View>
+    <SafeAreaView>
+      <View style={[styles.main, {}]}>
+        <Image
+          source={require("@/assets/images/logo.png")}
+          resizeMode="cover"
+          resizeMethod="auto"
+        />
+        <ThemedView style={styles.menu}>
+          <Image
+            source={require("@/assets/images/user.png")}
+            resizeMode="cover"
+            resizeMethod="auto"
+          />
+          <Image
+            source={require("@/assets/images/user.png")}
+            resizeMode="cover"
+            resizeMethod="auto"
+          />
+          <TouchableOpacity onPress={() => }>
+            <Image
+              source={require("@/assets/images/Menu.png")}
+              resizeMode="cover"
+              resizeMethod="auto"
+            />
+          </TouchableOpacity>
+        </ThemedView>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -30,11 +59,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 40,
   },
-  menu: {
-    flexDirection: "row",
-  },
   img: {
     height: 20,
     width: 30,
+  },
+  menu: {
+    flexDirection: "row",
+    flex: 0.5,
+    justifyContent: "space-around",
   },
 });

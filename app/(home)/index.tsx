@@ -1,15 +1,25 @@
-import { SafeAreaView, StyleSheet, Text, View, useColorScheme } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import CustomHeader from "@/components/CustomHeader";
 import { ThemedView } from "@/components/ThemedView";
+import Colors from "@/constants/Colors";
 
 const MainScreen = () => {
-    const colors=useColorScheme()
+  const colors = useColorScheme();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor:colors=="dark"? }}>
-      <ThemedView style={styles.main}>
-        <CustomHeader />
-      </ThemedView>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+      }}
+    >
+      <ThemedView style={styles.main}></ThemedView>
     </SafeAreaView>
   );
 };
