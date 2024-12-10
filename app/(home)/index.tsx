@@ -19,7 +19,9 @@ const MainScreen = () => {
         backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
       }}
     >
-      <ThemedView style={styles.main}></ThemedView>
+      <ThemedView>
+        <CustomHeader />
+      </ThemedView>
     </SafeAreaView>
   );
 };
@@ -29,6 +31,5 @@ export default MainScreen;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: "#ff0000",
   },
 });

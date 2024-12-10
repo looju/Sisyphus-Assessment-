@@ -12,9 +12,7 @@ export default function Layout() {
         <Stack.Screen
           name="index"
           options={{
-            headerShown: true,
-            title: "home",
-            header: () => <CustomHeader />,
+            headerShown: false,
           }}
         />
       </Stack>

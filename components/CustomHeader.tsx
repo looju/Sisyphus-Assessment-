@@ -13,41 +13,43 @@ import { ThemedText } from "./ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useNavigation } from "expo-router";
+import MenuBox from "./Menu";
 
 const CustomHeader = () => {
   const headerHeight = useHeaderHeight();
   const navigation = useNavigation();
-  const [visible,setVisibile]=useState(false)
+  const [visible, setVisibile] = useState(false);
   return (
-    <SafeAreaView>
-      <View style={[styles.main, {}]}>
+    <View style={[styles.main, {}]}>
+      <Image
+        source={require("@/assets/images/logo.png")}
+        resizeMode="cover"
+        resizeMethod="auto"
+      />
+
+      <ThemedView style={styles.menu}>
         <Image
-          source={require("@/assets/images/logo.png")}
+          source={require("@/assets/images/user.png")}
           resizeMode="cover"
           resizeMethod="auto"
         />
-        <ThemedView style={styles.menu}>
+        <Image
+          source={require("@/assets/images/user.png")}
+          resizeMode="cover"
+          resizeMethod="auto"
+        />
+        <TouchableOpacity onPress={() => setVisibile(!visible)}>
           <Image
-            source={require("@/assets/images/user.png")}
+            source={require("@/assets/images/Menu.png")}
             resizeMode="cover"
             resizeMethod="auto"
           />
-          <Image
-            source={require("@/assets/images/user.png")}
-            resizeMode="cover"
-            resizeMethod="auto"
-          />
-          <TouchableOpacity onPress={() => }>
-            <Image
-              source={require("@/assets/images/Menu.png")}
-              resizeMode="cover"
-              resizeMethod="auto"
-            />
-          </TouchableOpacity>
-        </ThemedView>
-        <MenuBox/>
-      </View>
-    </SafeAreaView>
+        </TouchableOpacity>
+      </ThemedView>
+      {visible && (
+        <MenuBox visible={visible} close={() => setVisibile(false)} />
+      )}
+    </View>
   );
 };
 
@@ -64,10 +66,16 @@ const styles = StyleSheet.create({
   img: {
     height: 20,
     width: 30,
+    alignSelf: "center",
+  },
+  imgView: {
+    height: 20,
+    width: 30,
+    flex: 1,
   },
   menu: {
     flexDirection: "row",
-    flex: 0.5,
+    flex: 0.7,
     justifyContent: "space-around",
   },
 });
