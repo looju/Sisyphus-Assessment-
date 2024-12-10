@@ -46,18 +46,8 @@ const PriceChanges = ({ change, high, low }: PriceChangesProp) => {
           {change}%
         </Text>
       </ThemedView>
-      <ThemedView
-        style={[
-          styles.container,
-          { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
-        ]}
-      >
-        <ThemedView
-          style={[
-            styles.row,
-            { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
-          ]}
-        >
+      <ThemedView style={styles.container}>
+        <ThemedView style={styles.row}>
           <AntDesign
             name="arrowup"
             size={15}
@@ -76,18 +66,8 @@ const PriceChanges = ({ change, high, low }: PriceChangesProp) => {
           {high}%
         </Text>
       </ThemedView>
-      <ThemedView
-        style={[
-          styles.container,
-          { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
-        ]}
-      >
-        <ThemedView
-          style={[
-            styles.row,
-            { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
-          ]}
-        >
+      <ThemedView style={styles.container}>
+        <ThemedView style={styles.row}>
           <AntDesign
             name="arrowdown"
             size={15}

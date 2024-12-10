@@ -10,14 +10,17 @@ import React, { useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import Colors from "@/constants/Colors";
-import { TradingViews } from "@/constants/Dummies";
+import { MoreOptions, TradingViews } from "@/constants/Dummies";
 import { iconNames } from "../constants/Dummies";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Dropdown } from "react-native-element-dropdown";
 
 const Charts = () => {
   const colors = useColorScheme();
   const [activeIndex, setActiveIndex] = useState<null | number>(0);
   const [iconsActiveIndex, setIconsActiveIndex] = useState<null | number>(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const [timeFrame, setTimeFrame] = useState("1M");
   return (
     <ThemedView
       style={[
@@ -64,7 +67,49 @@ const Charts = () => {
               </TouchableOpacity>
             );
           })}
-
+          <Dropdown
+            style={[
+              styles.dropdown,
+              {
+                backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+              },
+            ]}
+            placeholderStyle={[
+              styles.placeholderStyle,
+              { color: colors == "dark" ? Colors.white : Colors.dark },
+            ]}
+            containerStyle={{
+              backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+              borderColor: Colors.black,
+              width: "40%",
+            }}
+            itemTextStyle={{
+              color: colors == "dark" ? Colors.white : Colors.dark,
+            }}
+            selectedTextStyle={[
+              styles.selectedTextStyle,
+              { color: colors == "dark" ? Colors.white : Colors.dark },
+            ]}
+            inputSearchStyle={[
+              styles.inputSearchStyle,
+              { color: colors == "dark" ? Colors.white : Colors.dark },
+            ]}
+            iconStyle={styles.iconStyle}
+            data={MoreOptions}
+            search
+            maxHeight={300}
+            placeholder={!isFocus ? "1M" : "..."}
+            searchPlaceholder="Search..."
+            value={timeFrame}
+            labelField={"name"}
+            valueField={"name"}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              setTimeFrame(item.name);
+              setIsFocus(false);
+            }}
+          />
           {iconNames.map((item, index) => {
             const isActive = item.id - 1 === iconsActiveIndex;
             return (
@@ -116,6 +161,7 @@ const styles = StyleSheet.create({
   tradingView: {
     flex: 1,
     flexDirection: "row",
+    alignContent: "center",
   },
   btnView: {
     width: 40,
@@ -123,5 +169,58 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
+  },
+  container: {
+    width: "50%",
+    height: 80,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    paddingHorizontal: 8,
+    width: 70,
+    bottom: 5,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
+    backgroundColor: "white",
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 14,
+  },
+  selectedTextStyle: {
+    fontSize: 14,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  dropView: {},
+  img: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+    alignSelf: "center",
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  price: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.green,
+    marginLeft: 10,
+    alignSelf: "center",
   },
 });

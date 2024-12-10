@@ -25,7 +25,7 @@ const Header = () => {
 
 const CollapsibeTabs: React.FC = () => {
   const colors = useColorScheme();
-  const [chartsVisible, setChartsVisible] = useState(false);
+  const [chartsVisible, setChartsVisible] = useState(true);
   const [orderBookVisible, setOrderBookVisible] = useState(false);
   const [tradeVisible, setTradeVisible] = useState(false);
   const renderItem: ListRenderItem<number> = React.useCallback(({ index }) => {

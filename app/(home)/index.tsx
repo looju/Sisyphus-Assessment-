@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: 24,
   },
   selectedTextStyle: {
     fontSize: 24,
