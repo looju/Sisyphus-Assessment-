@@ -14,9 +14,10 @@ import Colors from "@/constants/Colors";
 import axios from "axios";
 import { Dropdown } from "react-native-element-dropdown";
 import { Base_url } from "@/constants/BaseUrl";
-import { pairs } from "@/constants/Pairs";
+import { pairs } from "@/constants/Dummies";
 import { AntDesign } from "@expo/vector-icons";
 import PriceChanges from "@/components/PriceChanges";
+import CollapsibeTabs from "@/components/CollapsibleTabs";
 
 const MainScreen = () => {
   const colors = useColorScheme();
@@ -106,7 +107,7 @@ const MainScreen = () => {
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={!isFocus ? coinName : "..."}
+              placeholder={!isFocus ? "BTC/USD" : "..."}
               searchPlaceholder="Search..."
               value={coinName}
               onFocus={() => setIsFocus(true)}
@@ -124,12 +125,18 @@ const MainScreen = () => {
               })}
             </Text>
           </ThemedView>
-          <ThemedView style={{ flex: 1 }}>
+          <ThemedView
+            style={{
+              flex: 1,
+              backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+            }}
+          >
             <PriceChanges
               change={coinData.quotes.USD.percent_change_24h}
               high={coinData.quotes.USD.percent_change_24h}
               low={coinData.quotes.USD.percent_change_24h}
             />
+            <CollapsibeTabs />
           </ThemedView>
         </>
       )}
