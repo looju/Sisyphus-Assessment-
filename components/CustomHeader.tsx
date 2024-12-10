@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -17,6 +17,7 @@ import { useNavigation } from "expo-router";
 const CustomHeader = () => {
   const headerHeight = useHeaderHeight();
   const navigation = useNavigation();
+  const [visible,setVisibile]=useState(false)
   return (
     <SafeAreaView>
       <View style={[styles.main, {}]}>
@@ -44,6 +45,7 @@ const CustomHeader = () => {
             />
           </TouchableOpacity>
         </ThemedView>
+        <MenuBox/>
       </View>
     </SafeAreaView>
   );
