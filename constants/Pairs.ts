@@ -1,8 +1,8 @@
-const pairs = [
+export const pairs = [
   {
     label: "BTC/USD",
     value: "bitcoin",
-    image: require("@/assets/images/pairs/png"),
+    image: require("@/assets/images/pairs.png"),
   },
   {
     label: "ETH/USD",
@@ -12,7 +12,7 @@ const pairs = [
   {
     label: "TETHER/USD",
     value: "tether",
-    image: require("@/assets/images/tether.jpg"),
+    image: require("@/assets/images/tether.jpeg"),
   },
   {
     label: "RIPPLE/USD",
