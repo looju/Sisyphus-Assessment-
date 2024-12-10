@@ -4,3 +4,9 @@ declare interface MenuBoxProps {
   open: () => void;
   close: () => void;
 }
+
+declare interface PriceChangesProp {
+  change: string;
+  high: string;
+  low: string;
+}
