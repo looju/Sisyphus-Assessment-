@@ -88,3 +88,29 @@ export const iconNames = [
     icon: "currency-ils",
   },
 ];
+
+export const controlViews = [
+  {
+    id: 0,
+    name: "Trading View",
+  },
+  {
+    id: 1,
+    name: "Depth",
+  },
+];
+
+export const time = [
+  {
+    id: 0,
+    name: "10",
+  },
+  {
+    id: 1,
+    name: "20",
+  },
+  {
+    id: 2,
+    name: "30",
+  },
+];

@@ -14,6 +14,7 @@ import { MoreOptions, TradingViews } from "@/constants/Dummies";
 import { iconNames } from "../constants/Dummies";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
+import ViewControls from "./ViewControls";
 
 const Charts = () => {
   const colors = useColorScheme();
@@ -22,12 +23,7 @@ const Charts = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [timeFrame, setTimeFrame] = useState("1M");
   return (
-    <ThemedView
-      style={[
-        styles.main,
-        { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
-      ]}
-    >
+    <ThemedView style={[styles.main]}>
       <ScrollView contentContainerStyle={styles.tradingView} horizontal>
         <>
           {TradingViews.map((item, index) => {
@@ -40,28 +36,14 @@ const Charts = () => {
                   setActiveIndex(index);
                 }}
               >
-                <ThemedView
-                  style={[
-                    styles.tradingView,
-                    {
-                      backgroundColor:
-                        colors == "dark" ? Colors.dark : Colors.white,
-                    },
-                  ]}
-                >
+                <ThemedView style={[styles.tradingView]}>
                   <View
                     style={[
                       styles.btnView,
                       { backgroundColor: isActive ? Colors.gray : undefined },
                     ]}
                   >
-                    <ThemedText
-                      style={{
-                        color: colors == "dark" ? Colors.white : Colors.dark,
-                      }}
-                    >
-                      {item.name}
-                    </ThemedText>
+                    <ThemedText>{item.name}</ThemedText>
                   </View>
                 </ThemedView>
               </TouchableOpacity>
@@ -119,15 +101,7 @@ const Charts = () => {
                   setActiveIndex(null), setIconsActiveIndex(index);
                 }}
               >
-                <ThemedView
-                  style={[
-                    styles.tradingView,
-                    {
-                      backgroundColor:
-                        colors == "dark" ? Colors.dark : Colors.white,
-                    },
-                  ]}
-                >
+                <ThemedView style={[styles.tradingView]}>
                   <View
                     style={[
                       styles.btnView,
@@ -146,6 +120,7 @@ const Charts = () => {
           })}
         </>
       </ScrollView>
+      <ViewControls />
     </ThemedView>
   );
 };
@@ -161,7 +136,6 @@ const styles = StyleSheet.create({
   tradingView: {
     flex: 1,
     flexDirection: "row",
-    alignContent: "center",
   },
   btnView: {
     width: 40,

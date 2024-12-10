@@ -13,6 +13,7 @@ import { ThemedView } from "./ThemedView";
 import Colors from "@/constants/Colors";
 import Charts from "./Charts";
 import { ThemedText } from "./ThemedText";
+import OrderBook from "./OrderBook";
 
 const HEADER_HEIGHT = 250;
 
@@ -69,6 +70,7 @@ const CollapsibeTabs: React.FC = () => {
         </TouchableOpacity>
       </ThemedView>
       {chartsVisible && <Charts />}
+      {orderBookVisible && <OrderBook />}
     </>
   );
 };

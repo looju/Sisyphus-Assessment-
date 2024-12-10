@@ -39,7 +39,7 @@ const MainScreen = () => {
       .catch((error) => {
         console.log(error, "Error calling ticker");
       });
-  }, []);
+  }, [coinName]);
 
   console.log(coinData.percent_change_24h);
   return (
