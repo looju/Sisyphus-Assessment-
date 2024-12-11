@@ -15,4 +15,5 @@ export default {
   red: "#ff0000",
   green: "#008000",
   blue: "#0000FF",
+  lemon: "rgba(37,194,110,1)",
 };
