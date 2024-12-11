@@ -12,6 +12,9 @@ import { TradeOptions } from "@/constants/Dummies";
 import { ThemedText } from "./ThemedText";
 import Colors from "@/constants/Colors";
 import OpenOrders from "./OpenOrders";
+import History from "./History";
+import Transactions from "./Transactions";
+import Positions from "./Positions";
 
 const TradeBook = () => {
   const colors = useColorScheme();
@@ -51,7 +54,7 @@ const TradeBook = () => {
           return (
             <TouchableOpacity
               onPress={() => {
-                setIndex(index), setRoute(options.name), displaySelectedRoute();
+                setIndex(index), setRoute(options.name);
               }}
             >
               <ThemedText style={{ fontWeight: isActive ? "bold" : "400" }}>
@@ -62,6 +65,9 @@ const TradeBook = () => {
         })}
       </ScrollView>
       {route == "Open Orders" && <OpenOrders />}
+      {route == "History" && <History />}
+      {route == "Positions" && <Positions />}
+      {route == "Transactions" && <Transactions />}
     </ThemedView>
   );
 };
