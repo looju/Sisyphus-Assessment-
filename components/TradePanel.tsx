@@ -57,7 +57,7 @@ const TradePanel = ({ refProp }: RefProps) => {
       handleIndicatorStyle={{
         backgroundColor: colors == "dark" ? Colors.black : Colors.white,
       }}
-      containerHeight={5000}
+      containerHeight={1000}
     >
       <BottomSheetScrollView
         style={[
@@ -66,7 +66,7 @@ const TradePanel = ({ refProp }: RefProps) => {
         ]}
         contentContainerStyle={{
           backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-          height: 5000,
+          height: 1000,
           width: "100%",
           paddingVertical: 50,
         }}

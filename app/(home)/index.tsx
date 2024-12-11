@@ -22,7 +22,7 @@ import { useCoinStore } from "@/Store/useCoinSelection";
 
 const MainScreen = () => {
   const colors = useColorScheme();
-  const [coinData, setCoinData] = useState([]);
+  const [coinData, setCoinData] = useState<[] | any>([]);
   const [coinName, setCoinName] = useState("btc-bitcoin");
   const [value, setValue] = useState(null);
   const [iconSource, setIconSource] = useState();
@@ -43,7 +43,6 @@ const MainScreen = () => {
       });
   }, [coinName]);
 
-  console.log(coinData.percent_change_24h);
   return (
     <SafeAreaView
       style={{
