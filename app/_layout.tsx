@@ -9,6 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { MenuProvider } from "react-native-popup-menu";
+import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -35,15 +36,19 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <MenuProvider>
-          <Stack>
-            <Stack.Screen name="(home)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </MenuProvider>
-      </ThemeProvider>
+      <PaperProvider>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <MenuProvider>
+            <Stack>
+              <Stack.Screen name="(home)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </MenuProvider>
+        </ThemeProvider>
+      </PaperProvider>
     </GestureHandlerRootView>
   );
 }

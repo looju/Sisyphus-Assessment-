@@ -9,5 +9,7 @@ type CodeStoreType = {
 
 export const useCoinStore = create((set, get) => ({
   coin: "btc-bitcoin",
+  order: "Good Till Cancelled",
   addCoin: (value: string) => set({ code: value }),
+  addOrder: (value: string) => set({ order: value }),
 }));

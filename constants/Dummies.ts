@@ -149,3 +149,33 @@ export const exchanges = [
     name: "Sell",
   },
 ];
+
+export const tradeType = [
+  {
+    id: 0,
+    name: "Limit",
+  },
+  {
+    id: 1,
+    name: "Market",
+  },
+  {
+    id: 2,
+    name: "Stop",
+  },
+];
+
+export const orderType = [
+  {
+    id: 0,
+    name: "Good Till Cancelled",
+  },
+  {
+    id: 1,
+    name: "Day Order",
+  },
+  {
+    id: 2,
+    name: "Fill Order",
+  },
+];

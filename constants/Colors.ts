@@ -16,4 +16,6 @@ export default {
   green: "#008000",
   blue: "#0000FF",
   lemon: "rgba(37,194,110,1)",
+  darkBlue: "rgba(53,57,69,1)",
+  neon: "rgba(32,37,43,1)",
 };

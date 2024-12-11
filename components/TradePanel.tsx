@@ -14,15 +14,25 @@ import BottomSheet, {
 import { RefProps } from "@/typings";
 import Colors from "@/constants/Colors";
 import { ThemedView } from "./ThemedView";
-import { exchanges } from "@/constants/Dummies";
+import { exchanges, tradeType } from "@/constants/Dummies";
 import { ThemedText } from "./ThemedText";
+import TradeInput from "./TradeInput";
+import { useCoinStore } from "@/Store/useCoinSelection";
 
 const TradePanel = ({ refProp }: RefProps) => {
   const colors = useColorScheme();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [tradeTypeIndex, setTradeTypeIndex] = useState(0);
+  const [price, setPrice] = useState("");
+  const [amount, setAmount] = useState("");
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
+  const orderType = useCoinStore((state) => state.order);
+  let USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
   return (
     <BottomSheet
@@ -34,37 +44,111 @@ const TradePanel = ({ refProp }: RefProps) => {
       handleIndicatorStyle={{
         backgroundColor: colors == "dark" ? Colors.black : Colors.white,
       }}
+      containerHeight={5000}
     >
       <BottomSheetScrollView
-        style={styles.contentContainer}
+        style={[
+          styles.contentContainer,
+          { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
+        ]}
         contentContainerStyle={{
           backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-          height: "100%",
+          height: 5000,
           width: "100%",
+          paddingVertical: 50,
         }}
+        contentInsetAdjustmentBehavior={"automatic"}
       >
-        <ThemedView style={styles.options}>
-          {exchanges.map((item, index) => {
-            const isActive = item.id === activeIndex;
-            return (
-              <ThemedView
-                style={[
-                  {
-                    borderColor: isActive
-                      ? activeIndex == 0
-                        ? Colors.green
-                        : Colors.red
-                      : undefined,
-                  },
-                  styles.btn,
-                ]}
-              >
-                <TouchableOpacity onPress={() => setActiveIndex(index)}>
-                  <ThemedText>{item.name}</ThemedText>
-                </TouchableOpacity>
-              </ThemedView>
-            );
-          })}
+        <ThemedView>
+          <ThemedView style={styles.options}>
+            {exchanges.map((item, index) => {
+              const isActive = item.id === activeIndex;
+              return (
+                <ThemedView
+                  style={[
+                    {
+                      borderColor: isActive
+                        ? activeIndex == 0
+                          ? Colors.green
+                          : Colors.red
+                        : undefined,
+                    },
+                    styles.btn,
+                  ]}
+                >
+                  <TouchableOpacity onPress={() => setActiveIndex(index)}>
+                    <ThemedText>{item.name}</ThemedText>
+                  </TouchableOpacity>
+                </ThemedView>
+              );
+            })}
+          </ThemedView>
+          <ThemedView
+            style={[
+              styles.options,
+              {
+                paddingHorizontal: 10,
+                justifyContent: "space-between",
+                top: 40,
+                marginBottom: 80,
+              },
+            ]}
+          >
+            {tradeType.map((item, index) => {
+              const isActive = item.id === tradeTypeIndex;
+              return (
+                <ThemedView
+                  style={[
+                    {
+                      backgroundColor: isActive ? Colors.darkBlue : undefined,
+                    },
+                    styles.btn2,
+                  ]}
+                >
+                  <TouchableOpacity onPress={() => setTradeTypeIndex(index)}>
+                    <ThemedText>{item.name}</ThemedText>
+                  </TouchableOpacity>
+                </ThemedView>
+              );
+            })}
+          </ThemedView>
+          <TradeInput
+            value={price}
+            onChangeText={(value: string) => setPrice(value)}
+            label=""
+            placeholder="0.00USD"
+            displayText="Limit Price"
+            toolTipText="This is the alloted limit price"
+          />
+          <TradeInput
+            value={amount}
+            onChangeText={(value: string) => setAmount(value)}
+            label=""
+            placeholder="0.00USD"
+            displayText="Amount"
+            toolTipText="Amount to transact"
+            type="default"
+          />
+          <TradeInput
+            label=""
+            placeholder="0.00USD"
+            displayText="Type"
+            toolTipText="Type of transaction"
+            type="selection"
+          />
+          <TradeInput
+            label=""
+            placeholder="0.00USD"
+            displayText="Post Only"
+            toolTipText="Deferrable Transaction"
+            type=""
+          />
+          <ThemedView style={styles.row}>
+            <ThemedText>Total</ThemedText>
+            <ThemedText>
+              {USDollar.format(Number(amount) * Number(price))}
+            </ThemedText>
+          </ThemedView>
         </ThemedView>
       </BottomSheetScrollView>
     </BottomSheet>
@@ -77,11 +161,11 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
   contentContainer: {
-    flex: 1,
-    padding: 36,
-    height: "100%",
-    width: "100%",
     bottom: 50,
+    width: "100%",
+    position: "absolute",
+    elevation: 5,
+    height: "100%",
   },
   options: {
     flex: 1,
@@ -96,6 +180,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 3,
+  },
+  btn2: {
+    width: 80,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 3,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 15,
   },
 });
 
