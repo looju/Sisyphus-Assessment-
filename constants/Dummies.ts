@@ -4,26 +4,31 @@ export const pairs = [
     label: "BTC/USD",
     value: "bitcoin",
     image: require("@/assets/images/pairs.png"),
+    id: "btc-bitcoin",
   },
   {
     label: "ETH/USD",
     value: "ethereum",
     image: require("@/assets/images/eth.png"),
+    id: "eth-ethereum",
   },
   {
     label: "TETHER/USD",
     value: "tether",
     image: require("@/assets/images/tether.jpeg"),
+    id: "usdt-tether",
   },
   {
     label: "RIPPLE/USD",
     value: "ripple",
     image: require("@/assets/images/xrp.jpeg"),
+    id: "xrp-rippel",
   },
   {
     label: "CARDANO/USD",
     value: "cardano",
     image: require("@/assets/images/cardano.jpeg"),
+    id: "ada-cardano",
   },
 ];
 

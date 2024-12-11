@@ -18,6 +18,7 @@ import { pairs } from "@/constants/Dummies";
 import { AntDesign } from "@expo/vector-icons";
 import PriceChanges from "@/components/PriceChanges";
 import CollapsibeTabs from "@/components/CollapsibleTabs";
+import { useCoinStore } from "@/Store/useCoinSelection";
 
 const MainScreen = () => {
   const colors = useColorScheme();
@@ -26,6 +27,7 @@ const MainScreen = () => {
   const [value, setValue] = useState(null);
   const [iconSource, setIconSource] = useState();
   const [isFocus, setIsFocus] = useState(false);
+  const addCoinToStore = useCoinStore((state) => state.addCoin);
 
   useEffect(() => {
     const config = {
@@ -113,7 +115,8 @@ const MainScreen = () => {
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
               onChange={(item) => {
-                setCoinName(item.value);
+                setCoinName(item.id);
+                addCoinToStore(item.id);
                 setIsFocus(false);
                 setIconSource(item.image);
               }}

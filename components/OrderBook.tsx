@@ -5,6 +5,7 @@ import {
   Image,
   useColorScheme,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ThemedView } from "./ThemedView";
@@ -13,6 +14,9 @@ import { Dropdown } from "react-native-element-dropdown";
 import { time } from "@/constants/Dummies";
 import axios from "axios";
 import { Base_url } from "@/constants/BaseUrl";
+import { useCoinStore } from "@/Store/useCoinSelection";
+import PositiveTable from "./PositiveTable";
+import NegativeTable from "./NegativeTable";
 
 const OrderBook = () => {
   const [negativeFirst, setNegativeFirst] = useState(true);
@@ -20,7 +24,10 @@ const OrderBook = () => {
   const [coinData, setCoinData] = useState([]);
   const [isFocus, setIsFocus] = useState(false);
   const [timeFrame, setTimeFrame] = useState("10");
+  const coinName = useCoinStore((state) => state.coin);
   const colors = useColorScheme();
+
+  console.log(coinName);
 
   const toggleNegativeFirst = () => {
     setNegativeFirst(true);
@@ -39,20 +46,27 @@ const OrderBook = () => {
       },
     };
     axios
-      .get(`${Base_url}/tickers/${coinName}`)
+      .get(`https://api.coinpaprika.com/v1/coins/${coinName}/ohlcv/latest`)
       .then((res) => setCoinData(res.data))
       .catch((error) => {
-        console.log(error, "Error calling ticker");
+        console.log(error, "Error calling ohclv");
       });
-  }, []);
+  }, [coinName]);
 
   return (
     <ThemedView style={styles.main}>
       <ThemedView style={styles.controls}>
         <ThemedView style={styles.toggleBtns}>
-          <Image source={require("@/assets/images/2.png")} />
-          <Image source={require("@/assets/images/1.png")} />
-          <Image source={require("@/assets/images/2.png")} />
+          <TouchableOpacity onPress={toggleNegativeFirst}>
+            <Image source={require("@/assets/images/2.png")} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={togglePositiveFirst}>
+            <Image source={require("@/assets/images/1.png")} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={toggleNegativeFirst}>
+            <Image source={require("@/assets/images/2.png")} />
+          </TouchableOpacity>
         </ThemedView>
         <Dropdown
           style={[
@@ -85,7 +99,7 @@ const OrderBook = () => {
           data={time}
           search
           maxHeight={300}
-          placeholder={!isFocus ? "1M" : "..."}
+          placeholder={!isFocus ? "10" : "..."}
           searchPlaceholder="Search..."
           value={timeFrame}
           labelField={"name"}
@@ -98,7 +112,16 @@ const OrderBook = () => {
           }}
         />
       </ThemedView>
-      <FlatList />
+      <FlatList
+        data={coinData}
+        renderItem={({ item }) =>
+          negativeFirst ? (
+            <NegativeTable data={item} amount={timeFrame} />
+          ) : (
+            <PositiveTable data={item} amount={timeFrame} />
+          )
+        }
+      />
     </ThemedView>
   );
 };

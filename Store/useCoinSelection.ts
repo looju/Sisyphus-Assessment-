@@ -7,15 +7,7 @@ type CodeStoreType = {
   addcoin: (value: string) => void;
 };
 
-export const useCoinStore = create(
-  persist(
-    (set, get) => ({
-      coin: "",
-      addCoin: (value: string) => set({ code: value }),
-    }),
-    {
-      name: "codeStore", // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => ZustandStorage),
-    }
-  )
-);
+export const useCoinStore = create((set, get) => ({
+  coin: "btc-bitcoin",
+  addCoin: (value: string) => set({ code: value }),
+}));

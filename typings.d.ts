@@ -10,3 +10,8 @@ declare interface PriceChangesProp {
   high: string;
   low: string;
 }
+
+declare interface TableProps {
+  data: any;
+  amount: string;
+}

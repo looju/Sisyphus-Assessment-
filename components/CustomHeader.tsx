@@ -34,7 +34,7 @@ const CustomHeader = () => {
           resizeMethod="auto"
         />
         <Image
-          source={require("@/assets/images/user.png")}
+          source={require("@/assets/images/Line.png")}
           resizeMode="cover"
           resizeMethod="auto"
         />
