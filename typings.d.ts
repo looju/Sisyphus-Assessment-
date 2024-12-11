@@ -18,6 +18,10 @@ declare interface TableProps {
   amount: string;
 }
 
+declare interface RefProps {
+  refProp: React.RefObject<BottomSheetMethods>;
+}
+
 declare interface BtnProps {
   onPress: () => void;
   styles?: ViewStyle;

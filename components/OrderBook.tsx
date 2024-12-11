@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import Colors from "@/constants/Colors";
 import { Dropdown } from "react-native-element-dropdown";
@@ -18,6 +18,8 @@ import { Base_url } from "@/constants/BaseUrl";
 import { useCoinStore } from "@/Store/useCoinSelection";
 import PositiveTable from "./PositiveTable";
 import NegativeTable from "./NegativeTable";
+import TradePanel from "./TradePanel";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 const OrderBook = () => {
   const [negativeFirst, setNegativeFirst] = useState(true);
@@ -27,6 +29,12 @@ const OrderBook = () => {
   const [timeFrame, setTimeFrame] = useState("10");
   const coinName = useCoinStore((state) => state.coin);
   const colors = useColorScheme();
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
   console.log(coinName);
 
@@ -55,75 +63,77 @@ const OrderBook = () => {
   }, [coinName]);
 
   return (
-    <ThemedView style={styles.main}>
-      <ThemedView style={styles.controls}>
-        <ThemedView style={styles.toggleBtns}>
-          <TouchableOpacity onPress={toggleNegativeFirst}>
-            <Image source={require("@/assets/images/2.png")} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={togglePositiveFirst}>
-            <Image source={require("@/assets/images/1.png")} />
-          </TouchableOpacity>
+    <>
+      <ThemedView style={styles.main}>
+        <ThemedView style={styles.controls}>
+          <ThemedView style={styles.toggleBtns}>
+            <TouchableOpacity onPress={toggleNegativeFirst}>
+              <Image source={require("@/assets/images/2.png")} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={togglePositiveFirst}>
+              <Image source={require("@/assets/images/1.png")} />
+            </TouchableOpacity>
 
-          <TouchableOpacity onPress={toggleNegativeFirst}>
-            <Image source={require("@/assets/images/2.png")} />
-          </TouchableOpacity>
-        </ThemedView>
-        <Dropdown
-          style={[
-            styles.dropdown,
-            {
+            <TouchableOpacity onPress={toggleNegativeFirst}>
+              <Image source={require("@/assets/images/2.png")} />
+            </TouchableOpacity>
+          </ThemedView>
+          <Dropdown
+            style={[
+              styles.dropdown,
+              {
+                backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+              },
+            ]}
+            placeholderStyle={[
+              styles.placeholderStyle,
+              { color: colors == "dark" ? Colors.white : Colors.dark },
+            ]}
+            containerStyle={{
               backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-            },
-          ]}
-          placeholderStyle={[
-            styles.placeholderStyle,
-            { color: colors == "dark" ? Colors.white : Colors.dark },
-          ]}
-          containerStyle={{
-            backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-            borderColor: Colors.black,
-            width: "40%",
-          }}
-          itemTextStyle={{
-            color: colors == "dark" ? Colors.white : Colors.dark,
-          }}
-          selectedTextStyle={[
-            styles.selectedTextStyle,
-            { color: colors == "dark" ? Colors.white : Colors.dark },
-          ]}
-          inputSearchStyle={[
-            styles.inputSearchStyle,
-            { color: colors == "dark" ? Colors.white : Colors.dark },
-          ]}
-          iconStyle={styles.iconStyle}
-          data={time}
-          search
-          maxHeight={300}
-          placeholder={!isFocus ? "10" : "..."}
-          searchPlaceholder="Search..."
-          value={timeFrame}
-          labelField={"name"}
-          valueField={"name"}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item) => {
-            setTimeFrame(item.name);
-            setIsFocus(false);
-          }}
+              borderColor: Colors.black,
+              width: "40%",
+            }}
+            itemTextStyle={{
+              color: colors == "dark" ? Colors.white : Colors.dark,
+            }}
+            selectedTextStyle={[
+              styles.selectedTextStyle,
+              { color: colors == "dark" ? Colors.white : Colors.dark },
+            ]}
+            inputSearchStyle={[
+              styles.inputSearchStyle,
+              { color: colors == "dark" ? Colors.white : Colors.dark },
+            ]}
+            iconStyle={styles.iconStyle}
+            data={time}
+            search
+            maxHeight={300}
+            placeholder={!isFocus ? "10" : "..."}
+            searchPlaceholder="Search..."
+            value={timeFrame}
+            labelField={"name"}
+            valueField={"name"}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              setTimeFrame(item.name);
+              setIsFocus(false);
+            }}
+          />
+        </ThemedView>
+        <FlatList
+          data={coinData}
+          renderItem={({ item }) =>
+            negativeFirst ? (
+              <NegativeTable data={item} amount={timeFrame} />
+            ) : (
+              <PositiveTable data={item} amount={timeFrame} />
+            )
+          }
         />
       </ThemedView>
-      <FlatList
-        data={coinData}
-        renderItem={({ item }) =>
-          negativeFirst ? (
-            <NegativeTable data={item} amount={timeFrame} />
-          ) : (
-            <PositiveTable data={item} amount={timeFrame} />
-          )
-        }
-      />
-    </ThemedView>
+    </>
   );
 };
 

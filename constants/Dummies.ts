@@ -138,3 +138,14 @@ export const TradeOptions = [
     name: "Transactions",
   },
 ];
+
+export const exchanges = [
+  {
+    id: 0,
+    name: "Buy",
+  },
+  {
+    id: 1,
+    name: "Sell",
+  },
+];

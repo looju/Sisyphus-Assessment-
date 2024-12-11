@@ -11,7 +11,7 @@ const CustomButton = ({
 }: BtnProps) => (
   <Button
     mode="contained"
-    onPress={() => onPress}
+    onPress={onPress}
     style={[{ width: 150, borderRadius: 10 }, styles]}
     buttonColor={btnColor}
     textColor={txtColor}
