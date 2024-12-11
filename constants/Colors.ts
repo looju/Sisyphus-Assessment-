@@ -18,4 +18,6 @@ export default {
   lemon: "rgba(37,194,110,1)",
   darkBlue: "rgba(53,57,69,1)",
   neon: "rgba(32,37,43,1)",
+  skyBlue: "rgba(72,58,235,1)",
+  lightRed: "rgba(221,86,141,1)",
 };

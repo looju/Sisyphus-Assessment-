@@ -14,10 +14,12 @@ import BottomSheet, {
 import { RefProps } from "@/typings";
 import Colors from "@/constants/Colors";
 import { ThemedView } from "./ThemedView";
-import { exchanges, tradeType } from "@/constants/Dummies";
+import { currency, exchanges, tradeType } from "@/constants/Dummies";
 import { ThemedText } from "./ThemedText";
 import TradeInput from "./TradeInput";
 import { useCoinStore } from "@/Store/useCoinSelection";
+import TradeButton from "./TradeButton";
+import Button from "./Button";
 
 const TradePanel = ({ refProp }: RefProps) => {
   const colors = useColorScheme();
@@ -25,6 +27,9 @@ const TradePanel = ({ refProp }: RefProps) => {
   const [tradeTypeIndex, setTradeTypeIndex] = useState(0);
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
+  const [totalValue, setTotalValue] = useState("");
+  const [orders, setOrders] = useState("");
+  const [available, setAvailable] = useState("");
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -34,6 +39,14 @@ const TradePanel = ({ refProp }: RefProps) => {
     currency: "USD",
   });
 
+  const Transact = () => {
+    //integrate with server
+  };
+
+  const InitiateBankTransaction = () => {
+    //integrate with server based on whetehr withdrawal or deposit
+    // activeIndex==0?//DepositMoney():WithdrawMoney()
+  };
   return (
     <BottomSheet
       ref={refProp}
@@ -90,7 +103,7 @@ const TradePanel = ({ refProp }: RefProps) => {
                 paddingHorizontal: 10,
                 justifyContent: "space-between",
                 top: 40,
-                marginBottom: 80,
+                marginBottom: 90,
               },
             ]}
           >
@@ -141,7 +154,6 @@ const TradePanel = ({ refProp }: RefProps) => {
             placeholder="0.00USD"
             displayText="Post Only"
             toolTipText="Deferrable Transaction"
-            type=""
           />
           <ThemedView style={styles.row}>
             <ThemedText>Total</ThemedText>
@@ -149,6 +161,41 @@ const TradePanel = ({ refProp }: RefProps) => {
               {USDollar.format(Number(amount) * Number(price))}
             </ThemedText>
           </ThemedView>
+          <TradeButton
+            styles={{ marginVertical: 15, alignSelf: "center" }}
+            text={"Buy BTC"}
+            onPress={() => Transact()}
+          />
+          <TradeInput
+            label=""
+            placeholder="0.00"
+            displayText="Total Account Value"
+            toolTipText="Type of transaction"
+            type="selection"
+            fullInput={"singular"}
+            showIcon={false}
+            value={totalValue}
+            onChangeText={(value: string) => setTotalValue(value)}
+            currency={true}
+          />
+          <TradeInput
+            label=""
+            placeholder="0.00"
+            displayText="Open Orders"
+            toolTipText="Type of transaction"
+            type="selection"
+            fullInput={"double"}
+            showIcon={false}
+            value={orders}
+            onChangeText={(value: string) => setOrders(value)}
+          />
+          <Button
+            text={activeIndex == 0 ? "Deposit" : "Withdraw"}
+            btnColor={activeIndex == 0 ? Colors.blue : Colors.red}
+            txtColor={colors == "dark" ? Colors.white : Colors.black}
+            onPress={() => InitiateBankTransaction()}
+            styles={{ top: 40 }}
+          />
         </ThemedView>
       </BottomSheetScrollView>
     </BottomSheet>
@@ -194,6 +241,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 15,
+    marginBottom: 10,
   },
 });
 

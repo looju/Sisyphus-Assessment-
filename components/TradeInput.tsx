@@ -8,32 +8,152 @@ import Colors from "@/constants/Colors";
 import { orderType as order } from "@/constants/Dummies";
 import { Dropdown } from "react-native-element-dropdown";
 import { useCoinStore } from "@/Store/useCoinSelection";
+import { currency as currencyData } from "@/constants/Dummies";
+import { TradeInputProps } from "@/typings";
 
 const TradeInput = ({
   value,
   onChangeText,
+  value2,
+  onChangeText2,
   label,
   placeholder,
   displayText,
   toolTipText,
   type = "default",
-}) => {
+  showIcon = true,
+  fullInput = "",
+  currency,
+}: TradeInputProps) => {
   const colors = useColorScheme();
   const [isFocus, setIsFocus] = useState(false);
   const orderType = useCoinStore((state) => state.order);
   const addOrderType = useCoinStore((state) => state.addOrder);
+  const currencyFigure = useCoinStore((state) => state.currency);
+  const addCurrencyFigure = useCoinStore((state) => state.addCurrency);
   return (
     <ThemedView style={[styles.main]}>
-      <ThemedView style={styles.toolTipView}>
-        <ThemedText>{displayText}</ThemedText>
-        <Tooltip title={toolTipText} enterTouchDelay={50}>
-          <Feather
-            name="info"
-            size={24}
-            color={colors == "dark" ? Colors.white : Colors.dark}
-            style={{ left: 5 }}
+      <ThemedView
+        style={{
+          flex: 1,
+          height: 100,
+          width: "100%",
+        }}
+      >
+        <ThemedView style={[styles.toolTipView, { top: fullInput ? 10 : 2 }]}>
+          <ThemedText>{displayText}</ThemedText>
+          {showIcon && (
+            <Tooltip title={toolTipText} enterTouchDelay={50}>
+              <Feather
+                name="info"
+                size={24}
+                color={colors == "dark" ? Colors.white : Colors.dark}
+                style={{ left: 5 }}
+              />
+            </Tooltip>
+          )}
+        </ThemedView>
+        {fullInput == "double" ? (
+          <ThemedView
+            style={{
+              flexDirection: "row",
+              paddingRight: 15,
+            }}
+          >
+            <TextInput
+              label={label}
+              value={value}
+              onChangeText={onChangeText}
+              placeholder={placeholder}
+              style={[
+                styles.input,
+                {
+                  backgroundColor:
+                    colors == "dark" ? Colors.dark : Colors.white,
+                  top: 5,
+                  width: "100%",
+                  textAlign: "left",
+                  fontSize: 20,
+                  alignContent: "flex-start",
+                  alignItems: "flex-start",
+                  fontWeight: "bold",
+                },
+              ]}
+              activeUnderlineColor={
+                colors == "dark" ? Colors.white : Colors.dark
+              }
+              underlineColor={colors == "dark" ? Colors.dark : Colors.white}
+              placeholderTextColor={
+                colors == "dark" ? Colors.white : Colors.black
+              }
+              textAlign="left"
+              returnKeyType="done"
+              keyboardType="numeric"
+              autoCapitalize="none"
+            />
+            <TextInput
+              label={label}
+              value={value2}
+              onChangeText={onChangeText2}
+              placeholder={placeholder}
+              style={[
+                styles.input,
+                {
+                  backgroundColor:
+                    colors == "dark" ? Colors.dark : Colors.white,
+                  top: 5,
+                  width: "100%",
+                  textAlign: "left",
+                  fontSize: 20,
+                  alignContent: "flex-end",
+                  alignItems: "flex-end",
+                  fontWeight: "bold",
+                },
+              ]}
+              activeUnderlineColor={
+                colors == "dark" ? Colors.white : Colors.dark
+              }
+              underlineColor={colors == "dark" ? Colors.dark : Colors.white}
+              placeholderTextColor={
+                colors == "dark" ? Colors.white : Colors.black
+              }
+              textAlign="left"
+              returnKeyType="done"
+              keyboardType="numeric"
+              autoCapitalize="none"
+            />
+          </ThemedView>
+        ) : fullInput == "singular" ? (
+          <TextInput
+            label={label}
+            value={value}
+            onChangeText={onChangeText}
+            placeholder={placeholder}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+                top: 5,
+                width: "100%",
+                textAlign: "left",
+                fontSize: 20,
+                alignContent: "flex-start",
+                alignItems: "flex-start",
+                fontWeight: "bold",
+                marginBottom: 20,
+              },
+            ]}
+            activeUnderlineColor={colors == "dark" ? Colors.white : Colors.dark}
+            underlineColor={colors == "dark" ? Colors.dark : Colors.white}
+            placeholderTextColor={
+              colors == "dark" ? Colors.white : Colors.black
+            }
+            textAlign="left"
+            returnKeyType="done"
+            keyboardType="numeric"
+            autoCapitalize="none"
           />
-        </Tooltip>
+        ) : null}
       </ThemedView>
       {type == "default" ? (
         <TextInput
@@ -74,17 +194,22 @@ const TradeInput = ({
           }}
           selectedTextStyle={[
             styles.selectedTextStyle,
-            { color: colors == "dark" ? Colors.white : Colors.dark },
+            {
+              color: colors == "dark" ? Colors.white : Colors.dark,
+              left: currency == true ? 100 : 0,
+            },
           ]}
           inputSearchStyle={[
             styles.inputSearchStyle,
             { color: colors == "dark" ? Colors.white : Colors.dark },
           ]}
           iconStyle={styles.iconStyle}
-          data={order}
+          data={currency ? currencyData : order}
           search
           maxHeight={300}
-          placeholder={!isFocus ? orderType : "..."}
+          placeholder={
+            !isFocus ? (currency ? currencyFigure : orderType) : "..."
+          }
           searchPlaceholder="Search..."
           value={orderType}
           labelField={"name"}
@@ -92,7 +217,7 @@ const TradeInput = ({
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item: any) => {
-            addOrderType(item.name);
+            currency ? addCurrencyFigure(item.name) : addOrderType(item.name);
             setIsFocus(false);
           }}
           dropdownPosition="top"

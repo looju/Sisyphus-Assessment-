@@ -179,3 +179,18 @@ export const orderType = [
     name: "Fill Order",
   },
 ];
+
+export const currency = [
+  {
+    id: 0,
+    name: "NGN",
+  },
+  {
+    id: 1,
+    name: "USD",
+  },
+  {
+    id: 2,
+    name: "GBP",
+  },
+];

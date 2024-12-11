@@ -1,6 +1,8 @@
 import { BtnProps } from "@/typings";
 import * as React from "react";
 import { Button } from "react-native-paper";
+import { LinearGradient } from "expo-linear-gradient";
+import Colors from "@/constants/Colors";
 
 const CustomButton = ({
   onPress,
@@ -8,6 +10,7 @@ const CustomButton = ({
   btnColor,
   txtColor,
   text,
+  gradient,
 }: BtnProps) => (
   <Button
     mode="contained"
