@@ -31,7 +31,11 @@ const PriceChanges = ({ change, high, low }: PriceChangesProp) => {
             size={15}
             color={colors == "dark" ? Colors.white : Colors.black}
           />
-          <ThemedText style={{ marginLeft: 5 }}>24h change</ThemedText>
+          <ThemedText
+            style={{ marginLeft: 5, fontWeight: "200", fontSize: 15 }}
+          >
+            24h change
+          </ThemedText>
         </ThemedView>
         <Text
           style={[
@@ -53,7 +57,11 @@ const PriceChanges = ({ change, high, low }: PriceChangesProp) => {
             size={15}
             color={colors == "dark" ? Colors.white : Colors.black}
           />
-          <ThemedText style={{ marginLeft: 5 }}>24h high</ThemedText>
+          <ThemedText
+            style={{ marginLeft: 5, fontWeight: "200", fontSize: 15 }}
+          >
+            24h high
+          </ThemedText>
         </ThemedView>
         <Text
           style={[
@@ -73,7 +81,11 @@ const PriceChanges = ({ change, high, low }: PriceChangesProp) => {
             size={15}
             color={colors == "dark" ? Colors.white : Colors.black}
           />
-          <ThemedText style={{ marginLeft: 5 }}>24h low</ThemedText>
+          <ThemedText
+            style={{ marginLeft: 5, fontWeight: "200", fontSize: 15 }}
+          >
+            24h low
+          </ThemedText>
         </ThemedView>
         <Text
           style={[

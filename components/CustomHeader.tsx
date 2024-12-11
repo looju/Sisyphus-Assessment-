@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     flexDirection: "row",
-    flex: 0.7,
-    justifyContent: "space-around",
+    flex: 0.5,
+    justifyContent: "space-evenly",
   },
 });
