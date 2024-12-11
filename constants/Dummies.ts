@@ -119,3 +119,22 @@ export const time = [
     name: "30",
   },
 ];
+
+export const TradeOptions = [
+  {
+    id: 0,
+    name: "Open Orders",
+  },
+  {
+    id: 1,
+    name: "Positions",
+  },
+  {
+    id: 2,
+    name: "History",
+  },
+  {
+    id: 3,
+    name: "Transactions",
+  },
+];

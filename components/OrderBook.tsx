@@ -6,6 +6,7 @@ import {
   useColorScheme,
   FlatList,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ThemedView } from "./ThemedView";

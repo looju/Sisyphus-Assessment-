@@ -5,6 +5,7 @@ import { ThemedText } from "./ThemedText";
 import { useCoinStore } from "@/Store/useCoinSelection";
 import Colors from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import TradeBook from "./TradeBook";
 
 const NegativeTable = ({ data, amount }: TableProps) => {
   const coin: string = useCoinStore((state) => state.coin);
@@ -21,86 +22,96 @@ const NegativeTable = ({ data, amount }: TableProps) => {
   const priceArray = price.repeat(Number(amount)).split(",");
   const totalArray = total.repeat(Number(amount)).split(",");
   const amountPerCoinArray = amountPerCoin.repeat(Number(amount)).split(",");
+  //the reason for creating these arrays is to act as dummy data considering that the api does not return an array of historical values
   return (
-    <ThemedView>
-      <ThemedView style={styles.headers}>
-        <ThemedView style={styles.innerHeaderView}>
-          <ThemedText style={styles.headerText} numberOfLines={1}>
-            Price
-          </ThemedText>
-          <ThemedText>(USDT)</ThemedText>
-          <ThemedView style={styles.dataView}>
-            {priceArray.map((price) => {
-              return <ThemedText style={styles.lossTxt}>{price}</ThemedText>;
-            })}
+    <>
+      <ThemedView>
+        <ThemedView style={styles.headers}>
+          <ThemedView style={styles.innerHeaderView}>
+            <ThemedText style={styles.headerText} numberOfLines={1}>
+              Price
+            </ThemedText>
+            <ThemedText>(USDT)</ThemedText>
+            <ThemedView style={styles.dataView}>
+              {priceArray.map((price) => {
+                return <ThemedText style={styles.lossTxt}>{price}</ThemedText>;
+              })}
+            </ThemedView>
+          </ThemedView>
+          <ThemedView style={styles.innerHeaderView}>
+            <ThemedText style={styles.headerText} numberOfLines={1}>
+              Amount
+            </ThemedText>
+            <ThemedText>({coin.slice(0, 3).toLocaleUpperCase()})</ThemedText>
+            <ThemedView style={styles.dataView}>
+              {amountPerCoinArray.map((price) => {
+                return (
+                  <ThemedText style={styles.txt}>
+                    {price.slice(0, 7)}
+                  </ThemedText>
+                );
+              })}
+            </ThemedView>
+          </ThemedView>
+          <ThemedView style={styles.innerHeaderView}>
+            <ThemedText style={styles.headerText} numberOfLines={1}>
+              Total
+            </ThemedText>
+            <ThemedView style={[styles.dataView, { top: 25 }]}>
+              {totalArray.map((price) => {
+                return (
+                  <ThemedText style={[styles.txt]}>
+                    {price.slice(0, 7)}
+                  </ThemedText>
+                );
+              })}
+            </ThemedView>
           </ThemedView>
         </ThemedView>
-        <ThemedView style={styles.innerHeaderView}>
-          <ThemedText style={styles.headerText} numberOfLines={1}>
-            Amount
+        <View style={{ marginTop: 40 }} />
+        <ThemedView style={styles.row}>
+          <ThemedText style={[styles.lgTxt, { color: Colors.green }]}>
+            {priceArray[3]}
           </ThemedText>
-          <ThemedText>({coin.slice(0, 3).toLocaleUpperCase()})</ThemedText>
-          <ThemedView style={styles.dataView}>
-            {amountPerCoinArray.map((price) => {
-              return (
-                <ThemedText style={styles.txt}>{price.slice(0, 7)}</ThemedText>
-              );
-            })}
-          </ThemedView>
+          <AntDesign name="arrowup" size={20} color={Colors.green} />
+          <ThemedText style={[styles.lgTxt]}>{priceArray[3]}</ThemedText>
         </ThemedView>
-        <ThemedView style={styles.innerHeaderView}>
-          <ThemedText style={styles.headerText} numberOfLines={1}>
-            Total
-          </ThemedText>
-          <ThemedView style={[styles.dataView, { top: 25 }]}>
-            {totalArray.map((price) => {
-              return (
-                <ThemedText style={[styles.txt]}>
-                  {price.slice(0, 7)}
-                </ThemedText>
-              );
-            })}
+        <ThemedView style={styles.headers}>
+          <ThemedView style={styles.innerHeaderView}>
+            <ThemedView style={styles.dataView}>
+              {priceArray.map((price) => {
+                return (
+                  <ThemedText style={styles.profitTxt}>{price}</ThemedText>
+                );
+              })}
+            </ThemedView>
+          </ThemedView>
+          <ThemedView style={styles.innerHeaderView}>
+            <ThemedView style={styles.dataView}>
+              {amountPerCoinArray.map((price) => {
+                return (
+                  <ThemedText style={styles.txt}>
+                    {price.slice(0, 7)}
+                  </ThemedText>
+                );
+              })}
+            </ThemedView>
+          </ThemedView>
+          <ThemedView style={styles.innerHeaderView}>
+            <ThemedView style={[styles.dataView]}>
+              {totalArray.map((price) => {
+                return (
+                  <ThemedText style={[styles.txt]}>
+                    {price.slice(0, 7)}
+                  </ThemedText>
+                );
+              })}
+            </ThemedView>
           </ThemedView>
         </ThemedView>
       </ThemedView>
-      <View style={{ marginTop: 40 }} />
-      <ThemedView style={styles.row}>
-        <ThemedText style={[styles.lgTxt, { color: Colors.green }]}>
-          {priceArray[3]}
-        </ThemedText>
-        <AntDesign name="arrowup" size={20} color={Colors.green} />
-        <ThemedText style={[styles.lgTxt]}>{priceArray[3]}</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.headers}>
-        <ThemedView style={styles.innerHeaderView}>
-          <ThemedView style={styles.dataView}>
-            {priceArray.map((price) => {
-              return <ThemedText style={styles.profitTxt}>{price}</ThemedText>;
-            })}
-          </ThemedView>
-        </ThemedView>
-        <ThemedView style={styles.innerHeaderView}>
-          <ThemedView style={styles.dataView}>
-            {amountPerCoinArray.map((price) => {
-              return (
-                <ThemedText style={styles.txt}>{price.slice(0, 7)}</ThemedText>
-              );
-            })}
-          </ThemedView>
-        </ThemedView>
-        <ThemedView style={styles.innerHeaderView}>
-          <ThemedView style={[styles.dataView]}>
-            {totalArray.map((price) => {
-              return (
-                <ThemedText style={[styles.txt]}>
-                  {price.slice(0, 7)}
-                </ThemedText>
-              );
-            })}
-          </ThemedView>
-        </ThemedView>
-      </ThemedView>
-    </ThemedView>
+      <TradeBook />
+    </>
   );
 };
 
