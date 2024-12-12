@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, useColorScheme } from "react-native";
+import { Platform, StyleSheet, Text, View, useColorScheme } from "react-native";
 import { TextInput, Tooltip } from "react-native-paper";
 import React, { useState } from "react";
 import { ThemedView } from "./ThemedView";
@@ -32,6 +32,7 @@ const TradeInput = ({
   const addOrderType = useCoinStore((state) => state.addOrder);
   const currencyFigure = useCoinStore((state) => state.currency);
   const addCurrencyFigure = useCoinStore((state) => state.addCurrency);
+  const android = Platform.OS == "android";
   return (
     <ThemedView style={[styles.main]}>
       <ThemedView
@@ -70,7 +71,7 @@ const TradeInput = ({
                 {
                   backgroundColor:
                     colors == "dark" ? Colors.dark : Colors.white,
-                  top: 5,
+                  top: 15,
                   width: "100%",
                   textAlign: "left",
                   fontSize: 20,
@@ -78,6 +79,7 @@ const TradeInput = ({
                   alignItems: "flex-start",
                   fontWeight: "bold",
                   color: colors == "dark" ? Colors.white : Colors.black,
+                  height: android ? 40 : 30,
                 },
               ]}
               placeholderTextColor={
@@ -105,6 +107,7 @@ const TradeInput = ({
                   alignItems: "flex-end",
                   fontWeight: "bold",
                   color: colors == "dark" ? Colors.white : Colors.black,
+                  height: android ? 40 : 30,
                 },
               ]}
               placeholderTextColor={
@@ -134,6 +137,7 @@ const TradeInput = ({
                 fontWeight: "bold",
                 marginBottom: 20,
                 color: colors == "dark" ? Colors.white : Colors.black,
+                height: android ? 40 : 30,
               },
             ]}
             placeholderTextColor={
@@ -156,6 +160,7 @@ const TradeInput = ({
             {
               backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
               color: colors == "dark" ? Colors.white : Colors.black,
+              height: android ? 40 : 30,
             },
           ]}
           placeholderTextColor={colors == "dark" ? Colors.gray : Colors.dark}
@@ -239,7 +244,6 @@ const styles = StyleSheet.create({
   input: {
     width: "50%",
     alignItems: "center",
-    height: 30,
   },
   toolTipView: {
     flexDirection: "row",

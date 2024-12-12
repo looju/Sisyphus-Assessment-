@@ -53,7 +53,7 @@ const MainScreen = () => {
       style={{
         flex: 1,
         backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-        top: android ? 50 : 0,
+        top: android ? 30 : 0,
       }}
     >
       {coinData.length == 0 ? (
@@ -64,85 +64,88 @@ const MainScreen = () => {
         </ThemedView>
       ) : (
         <>
-          <ThemedView style={{ marginBottom: 60 }}>
-            <CustomHeader />
-          </ThemedView>
-          <ThemedView
-            style={[
-              {
-                flexDirection: "row",
-                alignItems: "center",
-              },
-            ]}
-          >
-            <Image
-              source={iconSource ?? require("@/assets/images/pairs.png")}
-              style={styles.img}
-            />
-            <Dropdown
+          <ThemedView style={{ marginBottom: 60, flex: 1 }}>
+            <ThemedView style={{ marginBottom: 60 }}>
+              <CustomHeader />
+            </ThemedView>
+            <ThemedView
               style={[
-                styles.dropdown,
                 {
-                  backgroundColor:
-                    colors == "dark" ? Colors.dark : Colors.white,
+                  flexDirection: "row",
+                  alignItems: "center",
                 },
               ]}
-              placeholderStyle={[
-                styles.placeholderStyle,
-                { color: colors == "dark" ? Colors.white : Colors.dark },
-              ]}
-              containerStyle={{
-                backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-                borderColor: Colors.black,
+            >
+              <Image
+                source={iconSource ?? require("@/assets/images/pairs.png")}
+                style={styles.img}
+              />
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  {
+                    backgroundColor:
+                      colors == "dark" ? Colors.dark : Colors.white,
+                  },
+                ]}
+                placeholderStyle={[
+                  styles.placeholderStyle,
+                  { color: colors == "dark" ? Colors.white : Colors.dark },
+                ]}
+                containerStyle={{
+                  backgroundColor:
+                    colors == "dark" ? Colors.dark : Colors.white,
+                  borderColor: Colors.black,
+                }}
+                itemTextStyle={{
+                  color: colors == "dark" ? Colors.white : Colors.dark,
+                }}
+                selectedTextStyle={[
+                  styles.selectedTextStyle,
+                  { color: colors == "dark" ? Colors.white : Colors.dark },
+                ]}
+                inputSearchStyle={[
+                  styles.inputSearchStyle,
+                  { color: colors == "dark" ? Colors.white : Colors.dark },
+                ]}
+                iconStyle={styles.iconStyle}
+                data={pairs}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!isFocus ? coinDisplayName : "..."}
+                searchPlaceholder="Search..."
+                value={coinDisplayName}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(item) => {
+                  setCoinName(item.id);
+                  setCoinDisplayName(item.label);
+                  addCoinToStore(item.id);
+                  setIsFocus(false);
+                  setIconSource(item.image);
+                }}
+              />
+              <Text style={styles.price}>
+                $
+                {coinData.quotes.USD.price.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                })}
+              </Text>
+            </ThemedView>
+            <ThemedView
+              style={{
+                flex: 1,
               }}
-              itemTextStyle={{
-                color: colors == "dark" ? Colors.white : Colors.dark,
-              }}
-              selectedTextStyle={[
-                styles.selectedTextStyle,
-                { color: colors == "dark" ? Colors.white : Colors.dark },
-              ]}
-              inputSearchStyle={[
-                styles.inputSearchStyle,
-                { color: colors == "dark" ? Colors.white : Colors.dark },
-              ]}
-              iconStyle={styles.iconStyle}
-              data={pairs}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={!isFocus ? coinDisplayName : "..."}
-              searchPlaceholder="Search..."
-              value={coinDisplayName}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              onChange={(item) => {
-                setCoinName(item.id);
-                setCoinDisplayName(item.label);
-                addCoinToStore(item.id);
-                setIsFocus(false);
-                setIconSource(item.image);
-              }}
-            />
-            <Text style={styles.price}>
-              $
-              {coinData.quotes.USD.price.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-              })}
-            </Text>
-          </ThemedView>
-          <ThemedView
-            style={{
-              flex: 1,
-            }}
-          >
-            <PriceChanges
-              change={coinData.quotes.USD.percent_change_24h}
-              high={coinData.quotes.USD.percent_change_24h}
-              low={coinData.quotes.USD.percent_change_24h}
-            />
-            <CollapsibeTabs />
+            >
+              <PriceChanges
+                change={coinData.quotes.USD.percent_change_24h}
+                high={coinData.quotes.USD.percent_change_24h}
+                low={coinData.quotes.USD.percent_change_24h}
+              />
+              <CollapsibeTabs />
+            </ThemedView>
           </ThemedView>
         </>
       )}
