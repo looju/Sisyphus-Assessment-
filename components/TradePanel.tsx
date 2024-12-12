@@ -55,7 +55,7 @@ const TradePanel = ({ refProp }: RefProps) => {
       ref={refProp}
       onChange={handleSheetChanges}
       index={-1}
-      snapPoints={["50%"]}
+      snapPoints={["20%", "50%"]}
       enablePanDownToClose
       handleIndicatorStyle={{
         backgroundColor: colors == "dark" ? Colors.white : Colors.black,
