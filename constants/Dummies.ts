@@ -12,24 +12,6 @@ export const pairs = [
     image: require("@/assets/images/eth.png"),
     id: "eth-ethereum",
   },
-  {
-    label: "TETHER/USD",
-    value: "tether",
-    image: require("@/assets/images/tether.jpeg"),
-    id: "usdt-tether",
-  },
-  {
-    label: "RIPPLE/USD",
-    value: "ripple",
-    image: require("@/assets/images/xrp.jpeg"),
-    id: "xrp-rippel",
-  },
-  {
-    label: "CARDANO/USD",
-    value: "cardano",
-    image: require("@/assets/images/cardano.jpeg"),
-    id: "ada-cardano",
-  },
 ];
 
 export const TradingViews = [
@@ -194,3 +176,30 @@ export const currency = [
     name: "GBP",
   },
 ];
+
+export const Data = {
+  labels: [
+    "02/21",
+    "03/21",
+    "04/21",
+    "05/21",
+    "06/21",
+    "07/21",
+    "08/21",
+    "09/21",
+  ],
+  datasets: [
+    {
+      data: [
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+      ],
+    },
+  ],
+};

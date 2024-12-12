@@ -8,6 +8,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import TradeBook from "./TradeBook";
 import TradePanel from "./TradePanel";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { TableProps } from "@/typings";
 
 const NegativeTable = ({ data, amount }: TableProps) => {
   const bottomSheetRef = useRef<BottomSheet>(null);

@@ -9,37 +9,41 @@ const Ohlc = () => {
   const prices = useCoinStore((state) => state.prices);
   const coinName = useCoinStore((state) => state.coin);
   const formatter = new Intl.NumberFormat("en-US");
-  return prices.length !== 0 ? (
+  return (
     <ThemedView style={styles.main}>
-      <ThemedView style={styles.row}>
-        <ThemedText style={styles.coin}>
-          {coinName.toLocaleUpperCase().slice(0, 3)}
-        </ThemedText>
-        <ThemedText>O </ThemedText>
-        <ThemedText style={styles.text}>
-          {formatter.format(prices[0].open)}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedText>H </ThemedText>
-        <ThemedText style={styles.text}>
-          {formatter.format(prices[0].high)}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedText>L </ThemedText>
-        <ThemedText style={styles.text}>
-          {formatter.format(prices[0].low)}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.row}>
-        <ThemedText>C </ThemedText>
-        <ThemedText style={styles.text}>
-          {formatter.format(prices[0].close)}
-        </ThemedText>
-      </ThemedView>
+      {prices.length !== 0 ? (
+        <>
+          <ThemedView style={styles.row}>
+            <ThemedText style={styles.coin}>
+              {coinName.toLocaleUpperCase().slice(0, 3)}
+            </ThemedText>
+            <ThemedText>O </ThemedText>
+            <ThemedText style={styles.text}>
+              {formatter.format(prices[0].open)}
+            </ThemedText>
+          </ThemedView>
+          <ThemedView style={styles.row}>
+            <ThemedText>H </ThemedText>
+            <ThemedText style={styles.text}>
+              {formatter.format(prices[0].high)}
+            </ThemedText>
+          </ThemedView>
+          <ThemedView style={styles.row}>
+            <ThemedText>L </ThemedText>
+            <ThemedText style={styles.text}>
+              {formatter.format(prices[0].low)}
+            </ThemedText>
+          </ThemedView>
+          <ThemedView style={styles.row}>
+            <ThemedText>C </ThemedText>
+            <ThemedText style={styles.text}>
+              {formatter.format(prices[0].close)}
+            </ThemedText>
+          </ThemedView>
+        </>
+      ) : null}
     </ThemedView>
-  ) : null;
+  );
 };
 
 export default Ohlc;

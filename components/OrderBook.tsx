@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ThemedView } from "./ThemedView";
@@ -64,75 +65,82 @@ const OrderBook = () => {
 
   return (
     <>
-      <ThemedView style={styles.main}>
-        <ThemedView style={styles.controls}>
-          <ThemedView style={styles.toggleBtns}>
-            <TouchableOpacity onPress={toggleNegativeFirst}>
-              <Image source={require("@/assets/images/2.png")} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={togglePositiveFirst}>
-              <Image source={require("@/assets/images/1.png")} />
-            </TouchableOpacity>
+      {coinData.length == 0 ? (
+        <ThemedView style={styles.empty}>
+          <ActivityIndicator size={"small"} />
+        </ThemedView>
+      ) : (
+        <ThemedView style={styles.main}>
+          <ThemedView style={styles.controls}>
+            <ThemedView style={styles.toggleBtns}>
+              <TouchableOpacity onPress={toggleNegativeFirst}>
+                <Image source={require("@/assets/images/2.png")} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={togglePositiveFirst}>
+                <Image source={require("@/assets/images/1.png")} />
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={toggleNegativeFirst}>
-              <Image source={require("@/assets/images/2.png")} />
-            </TouchableOpacity>
-          </ThemedView>
-          <Dropdown
-            style={[
-              styles.dropdown,
-              {
+              <TouchableOpacity onPress={toggleNegativeFirst}>
+                <Image source={require("@/assets/images/2.png")} />
+              </TouchableOpacity>
+            </ThemedView>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                {
+                  backgroundColor:
+                    colors == "dark" ? Colors.dark : Colors.white,
+                },
+              ]}
+              placeholderStyle={[
+                styles.placeholderStyle,
+                { color: colors == "dark" ? Colors.white : Colors.dark },
+              ]}
+              containerStyle={{
                 backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-              },
-            ]}
-            placeholderStyle={[
-              styles.placeholderStyle,
-              { color: colors == "dark" ? Colors.white : Colors.dark },
-            ]}
-            containerStyle={{
-              backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
-              borderColor: Colors.black,
-              width: "40%",
-            }}
-            itemTextStyle={{
-              color: colors == "dark" ? Colors.white : Colors.dark,
-            }}
-            selectedTextStyle={[
-              styles.selectedTextStyle,
-              { color: colors == "dark" ? Colors.white : Colors.dark },
-            ]}
-            inputSearchStyle={[
-              styles.inputSearchStyle,
-              { color: colors == "dark" ? Colors.white : Colors.dark },
-            ]}
-            iconStyle={styles.iconStyle}
-            data={time}
-            search
-            maxHeight={300}
-            placeholder={!isFocus ? "10" : "..."}
-            searchPlaceholder="Search..."
-            value={timeFrame}
-            labelField={"name"}
-            valueField={"name"}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={(item) => {
-              setTimeFrame(item.name);
-              setIsFocus(false);
-            }}
+                borderColor: Colors.black,
+                width: "40%",
+              }}
+              itemTextStyle={{
+                color: colors == "dark" ? Colors.white : Colors.dark,
+              }}
+              selectedTextStyle={[
+                styles.selectedTextStyle,
+                { color: colors == "dark" ? Colors.white : Colors.dark },
+              ]}
+              inputSearchStyle={[
+                styles.inputSearchStyle,
+                { color: colors == "dark" ? Colors.white : Colors.dark },
+              ]}
+              iconStyle={styles.iconStyle}
+              data={time}
+              search
+              maxHeight={300}
+              placeholder={!isFocus ? "10" : "..."}
+              searchPlaceholder="Search..."
+              value={timeFrame}
+              labelField={"name"}
+              valueField={"name"}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={(item) => {
+                setTimeFrame(item.name);
+                setIsFocus(false);
+              }}
+            />
+          </ThemedView>
+          <FlatList
+            data={coinData}
+            renderItem={({ item }) =>
+              negativeFirst ? (
+                <NegativeTable data={item} amount={timeFrame} />
+              ) : (
+                <PositiveTable data={item} amount={timeFrame} />
+              )
+            }
           />
         </ThemedView>
-        <FlatList
-          data={coinData}
-          renderItem={({ item }) =>
-            negativeFirst ? (
-              <NegativeTable data={item} amount={timeFrame} />
-            ) : (
-              <PositiveTable data={item} amount={timeFrame} />
-            )
-          }
-        />
-      </ThemedView>
+      )}
     </>
   );
 };
@@ -146,6 +154,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     width: "100%",
+  },
+  empty: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   toggleBtns: {
     flexDirection: "row",

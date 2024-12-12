@@ -37,7 +37,7 @@ const ViewControls = () => {
               <View
                 style={{
                   backgroundColor: isActive ? Colors.blue : undefined,
-                  width: 80,
+                  width: 120,
                   height: 30,
                   alignItems: "center",
                   borderRadius: 10,

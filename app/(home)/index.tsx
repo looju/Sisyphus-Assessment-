@@ -27,17 +27,9 @@ const MainScreen = () => {
   const [value, setValue] = useState(null);
   const [iconSource, setIconSource] = useState();
   const [isFocus, setIsFocus] = useState(false);
+  const [coinDisplayName, setCoinDisplayName] = useState("BTC/USD");
   const addCoinToStore = useCoinStore((state) => state.addCoin);
   const addPriceToStore = useCoinStore((state) => state.addPrice);
-
-  useEffect(() => {
-    axios
-      .get(`${Base_url}/coins/${coinName}/ohlcv/today`)
-      .then((res) => addPriceToStore(res.data))
-      .catch((error) => {
-        console.log(error, "Error calling daily prices");
-      });
-  }, [coinName]);
 
   useEffect(() => {
     axios
@@ -45,6 +37,12 @@ const MainScreen = () => {
       .then((res) => setCoinData(res.data))
       .catch((error) => {
         console.log(error, "Error calling ticker");
+      });
+    axios
+      .get(`${Base_url}/coins/${coinName}/ohlcv/today`)
+      .then((res) => addPriceToStore(res.data))
+      .catch((error) => {
+        console.log(error, "Error calling daily prices");
       });
   }, [coinName]);
 
@@ -112,13 +110,14 @@ const MainScreen = () => {
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={!isFocus ? "BTC/USD" : "..."}
+              placeholder={!isFocus ? coinDisplayName : "..."}
               searchPlaceholder="Search..."
-              value={coinName}
+              value={coinDisplayName}
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
               onChange={(item) => {
                 setCoinName(item.id);
+                setCoinDisplayName(item.label);
                 addCoinToStore(item.id);
                 setIsFocus(false);
                 setIconSource(item.image);

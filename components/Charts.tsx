@@ -123,8 +123,10 @@ const Charts = () => {
           })}
         </>
       </ScrollView>
-      <ViewControls />
-      <ChartGraph />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ViewControls />
+        <ChartGraph />
+      </ScrollView>
     </ThemedView>
   );
 };

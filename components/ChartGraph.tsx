@@ -6,6 +6,15 @@ import { ThemedView } from "./ThemedView";
 import { useCoinStore } from "@/Store/useCoinSelection";
 import { ThemedText } from "./ThemedText";
 import { generateIntervalsOf } from "@/utils/NumberUtils";
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart,
+} from "react-native-chart-kit";
+import { Data } from "@/constants/Dummies";
 const width = Dimensions.get("screen").width;
 
 export default function ChartGraph() {
@@ -23,38 +32,101 @@ export default function ChartGraph() {
   return (
     <>
       <ThemedView style={styles.main}>
-        <CandlestickChart.Provider data={data}>
-          <CandlestickChart width={width * 0.85}>
-            <CandlestickChart.Candles
-              positiveColor={Colors.positive}
-              negativeColor={Colors.negative}
-            />
-            <ThemedView style={{}}>
-              <CandlestickChart.DatetimeText
-                type="close"
-                style={{
-                  color: colors == "dark" ? Colors.white : Colors.black,
-                }}
+        <ThemedView style={styles.candleStick}>
+          <CandlestickChart.Provider data={data}>
+            <CandlestickChart width={width * 0.85}>
+              <CandlestickChart.Candles
+                positiveColor={Colors.positive}
+                negativeColor={Colors.negative}
               />
-            </ThemedView>
-            <CandlestickChart.Crosshair>
-              <CandlestickChart.Tooltip />
-            </CandlestickChart.Crosshair>
-          </CandlestickChart>
-        </CandlestickChart.Provider>
+              <ThemedView style={{}}>
+                <CandlestickChart.DatetimeText
+                  type="close"
+                  style={{
+                    color: colors == "dark" ? Colors.white : Colors.black,
+                  }}
+                />
+              </ThemedView>
+              <CandlestickChart.Crosshair
+                color={colors == "dark" ? Colors.white : Colors.black}
+              >
+                <CandlestickChart.Tooltip style={styles.toolTip} />
+              </CandlestickChart.Crosshair>
+            </CandlestickChart>
+          </CandlestickChart.Provider>
+          <ThemedView
+            style={[
+              styles.verticalBar,
+              { borderColor: colors == "dark" ? Colors.white : Colors.black },
+            ]}
+          >
+            {pricesLogs.reverse().map((prices) => {
+              const decimal = (Math.round(prices * 100) / 100).toFixed(2);
+              const formattedDecimal = formatter.format(Number(decimal));
+              return (
+                <ThemedText style={styles.text}>-{formattedDecimal}</ThemedText>
+              );
+            })}
+          </ThemedView>
+        </ThemedView>
         <ThemedView
           style={[
-            styles.verticalBar,
-            { borderColor: colors == "dark" ? Colors.white : Colors.black },
+            {
+              flex: 1,
+              width: "100%",
+              alignItems: "center",
+            },
           ]}
         >
-          {pricesLogs.reverse().map((prices) => {
-            const decimal = (Math.round(prices * 100) / 100).toFixed(2);
-            const formattedDecimal = formatter.format(Number(decimal));
-            return (
-              <ThemedText style={styles.text}>-{formattedDecimal}</ThemedText>
-            );
-          })}
+          <ThemedView style={styles.rtView}>
+            <ThemedView style={styles.row}>
+              <ThemedText>Vol(BTC):</ThemedText>
+              <ThemedText style={styles.lossTxt}>65.254k</ThemedText>
+            </ThemedView>
+            <ThemedView style={styles.row}>
+              <ThemedText>Vol(USDT)</ThemedText>
+              <ThemedText style={styles.lossTxt}>2.418B</ThemedText>
+            </ThemedView>
+          </ThemedView>
+
+          <BarChart
+            data={Data}
+            width={Dimensions.get("window").width * 0.85} // from react-native
+            height={240}
+            yAxisLabel="$"
+            xAxisLabel={undefined}
+            yAxisSuffix="k"
+            yAxisInterval={1} // optional, defaults to 1
+            chartConfig={{
+              backgroundColor: colors == "dark" ? "#141518" : "#fff",
+              backgroundGradientFrom: colors == "dark" ? "#141518" : "#fff",
+              backgroundGradientTo: colors == "dark" ? "#141518" : "#fff",
+              decimalPlaces: 2,
+              strokeWidth: 1,
+              color: (opacity = 1) => `rgba(0,128,0,${opacity})`,
+              labelColor: (opacity = 1) =>
+                `${
+                  colors == "light"
+                    ? `rgba(0,0,0, ${opacity})`
+                    : `rgba(255, 255, 255, ${opacity})`
+                }`,
+              style: {
+                borderRadius: 16,
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "#ffa726",
+              },
+            }}
+            withHorizontalLabels={false}
+            withInnerLines={false}
+            style={{
+              width: "90%",
+
+              alignSelf: "flex-start",
+            }}
+          />
         </ThemedView>
       </ThemedView>
     </>
@@ -63,9 +135,12 @@ export default function ChartGraph() {
 
 const styles = StyleSheet.create({
   main: {
-    top: "10%",
+    height: "100%",
+  },
+  candleStick: {
     flexDirection: "row",
   },
+
   verticalBar: {
     flex: 1,
     alignSelf: "flex-end",
@@ -77,5 +152,22 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 10,
+  },
+  toolTip: {
+    backgroundColor: Colors.green,
+    borderRadius: 2,
+    alignSelf: "flex-end",
+  },
+  lossTxt: {
+    color: Colors.red,
+  },
+  rtView: {
+    flexDirection: "row",
+    width: "70%",
+    justifyContent: "space-around",
+    alignSelf: "flex-start",
+  },
+  row: {
+    flexDirection: "row",
   },
 });
