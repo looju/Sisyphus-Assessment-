@@ -45,6 +45,7 @@ const TradeBook = ({ onPress }: onPressProps) => {
               onPress={() => {
                 setIndex(index), setRoute(options.name);
               }}
+              key={options.id}
             >
               <ThemedText style={{ fontWeight: isActive ? "bold" : "400" }}>
                 {options.name}

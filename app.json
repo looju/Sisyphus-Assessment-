@@ -4,7 +4,7 @@
     "slug": "assessment",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,23 +13,23 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#000080"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/lcon.png",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#000080"
         }
       ]

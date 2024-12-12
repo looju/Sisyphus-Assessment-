@@ -94,6 +94,7 @@ const TradePanel = ({ refProp }: RefProps) => {
                     },
                     styles.btn,
                   ]}
+                  key={item.id}
                 >
                   <TouchableOpacity onPress={() => setActiveIndex(index)}>
                     <ThemedText>{item.name}</ThemedText>
@@ -123,6 +124,7 @@ const TradePanel = ({ refProp }: RefProps) => {
                     },
                     styles.btn2,
                   ]}
+                  key={item.id}
                 >
                   <TouchableOpacity onPress={() => setTradeTypeIndex(index)}>
                     <ThemedText>{item.name}</ThemedText>

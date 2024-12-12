@@ -67,7 +67,6 @@ const MainScreen = () => {
           <ThemedView
             style={[
               {
-                backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
                 flexDirection: "row",
                 alignItems: "center",
               },
@@ -133,7 +132,6 @@ const MainScreen = () => {
           <ThemedView
             style={{
               flex: 1,
-              backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
             }}
           >
             <PriceChanges

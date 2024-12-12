@@ -38,9 +38,11 @@ const PositiveTable = ({ data, amount }: TableProps) => {
             </ThemedText>
             <ThemedText>(USDT)</ThemedText>
             <ThemedView style={styles.dataView}>
-              {priceArray.map((price) => {
+              {priceArray.map((price, index) => {
                 return (
-                  <ThemedText style={styles.profitTxt}>{price}</ThemedText>
+                  <ThemedText style={styles.profitTxt} key={index}>
+                    {price}
+                  </ThemedText>
                 );
               })}
             </ThemedView>
@@ -51,9 +53,9 @@ const PositiveTable = ({ data, amount }: TableProps) => {
             </ThemedText>
             <ThemedText>({coin.slice(0, 3).toLocaleUpperCase()})</ThemedText>
             <ThemedView style={styles.dataView}>
-              {amountPerCoinArray.map((price) => {
+              {amountPerCoinArray.map((price, index) => {
                 return (
-                  <ThemedText style={styles.txt}>
+                  <ThemedText style={styles.txt} key={index}>
                     {price.slice(0, 7)}
                   </ThemedText>
                 );
@@ -65,9 +67,9 @@ const PositiveTable = ({ data, amount }: TableProps) => {
               Total
             </ThemedText>
             <ThemedView style={[styles.dataView, { top: 25 }]}>
-              {totalArray.map((price) => {
+              {totalArray.map((price, index) => {
                 return (
-                  <ThemedText style={[styles.txt]}>
+                  <ThemedText style={[styles.txt]} key={index}>
                     {price.slice(0, 7)}
                   </ThemedText>
                 );
@@ -86,16 +88,20 @@ const PositiveTable = ({ data, amount }: TableProps) => {
         <ThemedView style={styles.headers}>
           <ThemedView style={styles.innerHeaderView}>
             <ThemedView style={styles.dataView}>
-              {priceArray.map((price) => {
-                return <ThemedText style={styles.lossTxt}>{price}</ThemedText>;
+              {priceArray.map((price, index) => {
+                return (
+                  <ThemedText style={styles.lossTxt} key={index}>
+                    {price}
+                  </ThemedText>
+                );
               })}
             </ThemedView>
           </ThemedView>
           <ThemedView style={styles.innerHeaderView}>
             <ThemedView style={styles.dataView}>
-              {amountPerCoinArray.map((price) => {
+              {amountPerCoinArray.map((price, index) => {
                 return (
-                  <ThemedText style={styles.txt}>
+                  <ThemedText style={styles.txt} key={index}>
                     {price.slice(0, 7)}
                   </ThemedText>
                 );
@@ -104,9 +110,9 @@ const PositiveTable = ({ data, amount }: TableProps) => {
           </ThemedView>
           <ThemedView style={styles.innerHeaderView}>
             <ThemedView style={[styles.dataView]}>
-              {totalArray.map((price) => {
+              {totalArray.map((price, index) => {
                 return (
-                  <ThemedText style={[styles.txt]}>
+                  <ThemedText style={[styles.txt]} key={index}>
                     {price.slice(0, 7)}
                   </ThemedText>
                 );

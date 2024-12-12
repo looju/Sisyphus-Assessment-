@@ -42,6 +42,7 @@ const Charts = () => {
                   setIconsActiveIndex(null);
                   setActiveIndex(index);
                 }}
+                key={item.id}
               >
                 <ThemedView style={[styles.tradingView]}>
                   <View
@@ -107,6 +108,7 @@ const Charts = () => {
                 onPress={() => {
                   setActiveIndex(null), setIconsActiveIndex(index);
                 }}
+                key={item.id}
               >
                 <ThemedView style={[styles.tradingView]}>
                   <View

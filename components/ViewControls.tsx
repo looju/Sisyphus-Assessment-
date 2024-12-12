@@ -33,7 +33,7 @@ const ViewControls = () => {
         {controlViews.map((item, index) => {
           const isActive = item.id === activeIndex;
           return (
-            <TouchableOpacity>
+            <TouchableOpacity key={item.id}>
               <View
                 style={{
                   backgroundColor: isActive ? Colors.blue : undefined,

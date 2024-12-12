@@ -53,12 +53,7 @@ const CollapsibeTabs: React.FC = () => {
 
   return (
     <>
-      <ThemedView
-        style={[
-          styles.row,
-          { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
-        ]}
-      >
+      <ThemedView style={[styles.row]}>
         <TouchableOpacity onPress={openCharts}>
           <ThemedText style={styles.name}>Charts</ThemedText>
         </TouchableOpacity>

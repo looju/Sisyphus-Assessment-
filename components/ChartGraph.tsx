@@ -21,12 +21,11 @@ export default function ChartGraph() {
   const colors = useColorScheme();
   const prices = useCoinStore((state) => state.prices);
   const coinName = useCoinStore((state) => state.coin);
-  const multiple = prices[0].high / 20;
-  const pricesLogs = generateIntervalsOf(
-    Number(multiple),
-    0,
-    Number(prices[0].high)
-  );
+  const multiple = prices.length !== 0 ? prices[0].high / 20 : null;
+  const pricesLogs =
+    multiple !== null
+      ? generateIntervalsOf(Number(multiple), 0, Number(prices[0].high))
+      : [];
 
   const formatter = new Intl.NumberFormat("en-US");
   return (
@@ -44,6 +43,7 @@ export default function ChartGraph() {
                   type="close"
                   style={{
                     color: colors == "dark" ? Colors.white : Colors.black,
+                    alignSelf: "center",
                   }}
                 />
               </ThemedView>
@@ -60,11 +60,13 @@ export default function ChartGraph() {
               { borderColor: colors == "dark" ? Colors.white : Colors.black },
             ]}
           >
-            {pricesLogs.reverse().map((prices) => {
+            {pricesLogs.reverse().map((prices, index) => {
               const decimal = (Math.round(prices * 100) / 100).toFixed(2);
               const formattedDecimal = formatter.format(Number(decimal));
               return (
-                <ThemedText style={styles.text}>-{formattedDecimal}</ThemedText>
+                <ThemedText style={styles.text} key={index}>
+                  -{formattedDecimal}
+                </ThemedText>
               );
             })}
           </ThemedView>
