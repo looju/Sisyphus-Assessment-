@@ -4,6 +4,7 @@ import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Colors from "@/constants/Colors";
+import { PriceChangesProp } from "@/typings";
 
 const PriceChanges = ({ change, high, low }: PriceChangesProp) => {
   const colors = useColorScheme();

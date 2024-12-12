@@ -6,7 +6,7 @@ import {
   View,
   useColorScheme,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { TradeOptions } from "@/constants/Dummies";
 import { ThemedText } from "./ThemedText";
@@ -15,29 +15,18 @@ import OpenOrders from "./OpenOrders";
 import History from "./History";
 import Transactions from "./Transactions";
 import Positions from "./Positions";
+import BottomSheet from "@gorhom/bottom-sheet";
+import TradePanel from "./TradePanel";
+import { onPressProps } from "@/typings";
 
-const TradeBook = () => {
+const TradeBook = ({ onPress }: onPressProps) => {
   const colors = useColorScheme();
   const [indexNumber, setIndex] = useState(0);
   const [route, setRoute] = useState<
     "Open Orders" | "Positions" | "History" | "Transactions" | ""
   >("Open Orders");
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const displaySelectedRoute = () => {
-    console.log(route);
-    switch (route) {
-      case "Open Orders":
-        return <OpenOrders />;
-      case "Positions":
-        return <OpenOrders />;
-      case "History":
-        return <OpenOrders />;
-      case "Transactions":
-        return <OpenOrders />;
-      default:
-        return <OpenOrders />;
-    }
-  };
   return (
     <ThemedView style={styles.main}>
       <ScrollView
@@ -64,10 +53,10 @@ const TradeBook = () => {
           );
         })}
       </ScrollView>
-      {route == "Open Orders" && <OpenOrders />}
-      {route == "History" && <History />}
-      {route == "Positions" && <Positions />}
-      {route == "Transactions" && <Transactions />}
+      {route == "Open Orders" && <OpenOrders onPress={onPress} />}
+      {route == "History" && <History onPress={onPress} />}
+      {route == "Positions" && <Positions onPress={onPress} />}
+      {route == "Transactions" && <Transactions onPress={onPress} />}
     </ThemedView>
   );
 };

@@ -4,8 +4,9 @@ import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import CustomButton from "./Button";
 import Colors from "@/constants/Colors";
+import { onPressProps } from "@/typings";
 
-const Positions = () => {
+const Positions = ({ onPress }: onPressProps) => {
   const colors = useColorScheme();
   return (
     <ThemedView style={styles.main}>
@@ -16,13 +17,13 @@ const Positions = () => {
       </ThemedText>
       <ThemedView style={styles.btnView}>
         <CustomButton
-          onPress={() => null}
+          onPress={onPress}
           btnColor={Colors.lemon}
           text="Buy"
           txtColor={colors == "dark" ? Colors.white : Colors.black}
         />
         <CustomButton
-          onPress={() => null}
+          onPress={onPress}
           btnColor={Colors.red}
           text="Sell"
           txtColor={colors == "dark" ? Colors.white : Colors.black}

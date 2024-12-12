@@ -6,7 +6,7 @@ import CustomButton from "./Button";
 import Colors from "@/constants/Colors";
 import TradePanel from "./TradePanel";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-const OpenOrders = () => {
+const OpenOrders = ({ onPress }: { onPress: () => void }) => {
   const colors = useColorScheme();
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -24,20 +24,19 @@ const OpenOrders = () => {
         </ThemedText>
         <ThemedView style={styles.btnView}>
           <CustomButton
-            onPress={() => bottomSheetRef.current?.expand()}
+            onPress={onPress}
             btnColor={Colors.lemon}
             text="Buy"
             txtColor={colors == "dark" ? Colors.white : Colors.black}
           />
           <CustomButton
-            onPress={() => null}
+            onPress={onPress}
             btnColor={Colors.red}
             text="Sell"
             txtColor={colors == "dark" ? Colors.white : Colors.black}
           />
         </ThemedView>
       </ThemedView>
-      <TradePanel refProp={bottomSheetRef} />
     </>
   );
 };

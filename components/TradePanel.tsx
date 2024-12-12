@@ -5,6 +5,8 @@ import {
   StyleSheet,
   useColorScheme,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, {
@@ -52,12 +54,16 @@ const TradePanel = ({ refProp }: RefProps) => {
       ref={refProp}
       onChange={handleSheetChanges}
       index={-1}
-      snapPoints={["100%"]}
+      snapPoints={["50%"]}
       enablePanDownToClose
       handleIndicatorStyle={{
-        backgroundColor: colors == "dark" ? Colors.black : Colors.white,
+        backgroundColor: colors == "dark" ? Colors.white : Colors.black,
       }}
       containerHeight={1000}
+      backgroundStyle={{
+        backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+      }}
+      keyboardBehavior="extend"
     >
       <BottomSheetScrollView
         style={[

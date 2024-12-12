@@ -10,6 +10,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useCoinStore } from "@/Store/useCoinSelection";
 import { currency as currencyData } from "@/constants/Dummies";
 import { TradeInputProps } from "@/typings";
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 
 const TradeInput = ({
   value,
@@ -60,8 +61,7 @@ const TradeInput = ({
               paddingRight: 15,
             }}
           >
-            <TextInput
-              label={label}
+            <BottomSheetTextInput
               value={value}
               onChangeText={onChangeText}
               placeholder={placeholder}
@@ -77,12 +77,9 @@ const TradeInput = ({
                   alignContent: "flex-start",
                   alignItems: "flex-start",
                   fontWeight: "bold",
+                  color: colors == "dark" ? Colors.white : Colors.black,
                 },
               ]}
-              activeUnderlineColor={
-                colors == "dark" ? Colors.white : Colors.dark
-              }
-              underlineColor={colors == "dark" ? Colors.dark : Colors.white}
               placeholderTextColor={
                 colors == "dark" ? Colors.white : Colors.black
               }
@@ -91,8 +88,7 @@ const TradeInput = ({
               keyboardType="numeric"
               autoCapitalize="none"
             />
-            <TextInput
-              label={label}
+            <BottomSheetTextInput
               value={value2}
               onChangeText={onChangeText2}
               placeholder={placeholder}
@@ -108,12 +104,9 @@ const TradeInput = ({
                   alignContent: "flex-end",
                   alignItems: "flex-end",
                   fontWeight: "bold",
+                  color: colors == "dark" ? Colors.white : Colors.black,
                 },
               ]}
-              activeUnderlineColor={
-                colors == "dark" ? Colors.white : Colors.dark
-              }
-              underlineColor={colors == "dark" ? Colors.dark : Colors.white}
               placeholderTextColor={
                 colors == "dark" ? Colors.white : Colors.black
               }
@@ -124,8 +117,7 @@ const TradeInput = ({
             />
           </ThemedView>
         ) : fullInput == "singular" ? (
-          <TextInput
-            label={label}
+          <BottomSheetTextInput
             value={value}
             onChangeText={onChangeText}
             placeholder={placeholder}
@@ -141,10 +133,9 @@ const TradeInput = ({
                 alignItems: "flex-start",
                 fontWeight: "bold",
                 marginBottom: 20,
+                color: colors == "dark" ? Colors.white : Colors.black,
               },
             ]}
-            activeUnderlineColor={colors == "dark" ? Colors.white : Colors.dark}
-            underlineColor={colors == "dark" ? Colors.dark : Colors.white}
             placeholderTextColor={
               colors == "dark" ? Colors.white : Colors.black
             }
@@ -156,16 +147,17 @@ const TradeInput = ({
         ) : null}
       </ThemedView>
       {type == "default" ? (
-        <TextInput
-          label={label}
+        <BottomSheetTextInput
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
           style={[
             styles.input,
-            { backgroundColor: colors == "dark" ? Colors.dark : Colors.white },
+            {
+              backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+              color: colors == "dark" ? Colors.white : Colors.black,
+            },
           ]}
-          activeUnderlineColor={Colors.blue}
           placeholderTextColor={colors == "dark" ? Colors.gray : Colors.dark}
           textAlign="center"
           returnKeyType="done"
@@ -182,7 +174,10 @@ const TradeInput = ({
           ]}
           placeholderStyle={[
             styles.placeholderStyle,
-            { color: colors == "dark" ? Colors.white : Colors.dark },
+            {
+              color: colors == "dark" ? Colors.white : Colors.dark,
+              left: currency ? 100 : 0,
+            },
           ]}
           containerStyle={{
             backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
@@ -196,7 +191,7 @@ const TradeInput = ({
             styles.selectedTextStyle,
             {
               color: colors == "dark" ? Colors.white : Colors.dark,
-              left: currency == true ? 100 : 0,
+              left: currency ? 100 : 0,
             },
           ]}
           inputSearchStyle={[

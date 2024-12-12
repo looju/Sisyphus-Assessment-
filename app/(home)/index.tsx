@@ -58,7 +58,6 @@ const MainScreen = () => {
         </ThemedView>
       ) : (
         <>
-          {" "}
           <ThemedView style={{ marginBottom: 60 }}>
             <CustomHeader />
           </ThemedView>

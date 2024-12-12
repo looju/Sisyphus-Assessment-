@@ -31,6 +31,9 @@ declare interface BtnProps {
   gradient?: boolean;
 }
 
+declare interface onPressProps {
+  onPress: () => void;
+}
 declare interface TradeInputProps {
   value?: string;
   onChangeText?: (value: string) => void;

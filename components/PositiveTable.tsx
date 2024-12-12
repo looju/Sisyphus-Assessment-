@@ -6,6 +6,7 @@ import { useCoinStore } from "@/Store/useCoinSelection";
 import Colors from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import TradeBook from "./TradeBook";
+import { TableProps } from "@/typings";
 
 const PositiveTable = ({ data, amount }: TableProps) => {
   const coin: string = useCoinStore((state) => state.coin);

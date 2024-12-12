@@ -4,6 +4,7 @@ import {
   MenuOptions,
   MenuOption,
   MenuTrigger,
+  renderers,
 } from "react-native-popup-menu";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
@@ -17,58 +18,50 @@ export default function MenuBox({
   close: () => void;
 }) {
   const colors = useColorScheme();
+  const { ContextMenu } = renderers;
   return (
-    <View
-      style={{
-        backgroundColor: colors == "dark" ? Colors.black : Colors.white,
-      }}
+    <Menu
+      opened={visible}
+      onBackdropPress={close}
+      onClose={close}
+      renderer={ContextMenu}
     >
-      <Menu
-        style={{
-          backgroundColor: colors == "dark" ? Colors.black : Colors.white,
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          position: "absolute",
+      <MenuTrigger text="Select action" />
+      <MenuOptions
+        optionsContainerStyle={{
+          backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
         }}
-        opened={visible}
-        onBackdropPress={close}
-        onClose={close}
       >
-        <MenuTrigger text="Select action" />
-        <MenuOptions>
-          <MenuOption>
-            <ThemedText
-              style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
-            >
-              Exchange
-            </ThemedText>
-          </MenuOption>
-          <MenuOption>
-            <ThemedText
-              style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
-            >
-              Wallets
-            </ThemedText>
-          </MenuOption>
-          <MenuOption>
-            <ThemedText
-              style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
-            >
-              Roqqu Hub
-            </ThemedText>
-          </MenuOption>
-          <MenuOption>
-            <ThemedText
-              style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
-            >
-              Logout
-            </ThemedText>
-          </MenuOption>
-        </MenuOptions>
-      </Menu>
-    </View>
+        <MenuOption>
+          <ThemedText
+            style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
+          >
+            Exchange
+          </ThemedText>
+        </MenuOption>
+        <MenuOption>
+          <ThemedText
+            style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
+          >
+            Wallets
+          </ThemedText>
+        </MenuOption>
+        <MenuOption>
+          <ThemedText
+            style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
+          >
+            Roqqu Hub
+          </ThemedText>
+        </MenuOption>
+        <MenuOption>
+          <ThemedText
+            style={{ color: colors == "dark" ? Colors.white : Colors.dark }}
+          >
+            Logout
+          </ThemedText>
+        </MenuOption>
+      </MenuOptions>
+    </Menu>
   );
 }
 

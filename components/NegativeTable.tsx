@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { useCoinStore } from "@/Store/useCoinSelection";
 import Colors from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import TradeBook from "./TradeBook";
+import TradePanel from "./TradePanel";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 const NegativeTable = ({ data, amount }: TableProps) => {
+  const bottomSheetRef = useRef<BottomSheet>(null);
   const coin: string = useCoinStore((state) => state.coin);
   const price: string = data.low.toLocaleString(undefined, {
     minimumFractionDigits: 3,
@@ -110,7 +113,8 @@ const NegativeTable = ({ data, amount }: TableProps) => {
           </ThemedView>
         </ThemedView>
       </ThemedView>
-      <TradeBook />
+      <TradeBook onPress={() => bottomSheetRef.current?.expand()} />
+      <TradePanel refProp={bottomSheetRef} />
     </>
   );
 };
