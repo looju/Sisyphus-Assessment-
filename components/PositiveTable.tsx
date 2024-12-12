@@ -8,6 +8,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import TradeBook from "./TradeBook";
 import { TableProps } from "@/typings";
 import BottomSheet from "@gorhom/bottom-sheet";
+import TradePanel from "./TradePanel";
 
 const PositiveTable = ({ data, amount }: TableProps) => {
   const coin: string = useCoinStore((state) => state.coin);
@@ -115,6 +116,7 @@ const PositiveTable = ({ data, amount }: TableProps) => {
         </ThemedView>
       </ThemedView>
       <TradeBook onPress={() => bottomSheetRef.current?.expand()} />
+      <TradePanel refProp={bottomSheetRef} />
     </>
   );
 };

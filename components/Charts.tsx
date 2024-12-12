@@ -6,7 +6,7 @@ import {
   View,
   useColorScheme,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import Colors from "@/constants/Colors";
@@ -17,6 +17,9 @@ import { Dropdown } from "react-native-element-dropdown";
 import ViewControls from "./ViewControls";
 import ChartGraph from "./ChartGraph";
 import { screenHeight, screenWidth } from "@/utils/Scaling";
+import TradeBook from "./TradeBook";
+import TradePanel from "./TradePanel";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 const Charts = () => {
   const colors = useColorScheme();
@@ -25,6 +28,7 @@ const Charts = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [timeFrame, setTimeFrame] = useState("1M");
   const height = screenHeight * 0.28;
+  const bottomSheetRef = useRef<BottomSheet>(null);
   return (
     <ThemedView style={[styles.main]}>
       <ScrollView contentContainerStyle={styles.tradingView} horizontal>
@@ -123,9 +127,14 @@ const Charts = () => {
           })}
         </>
       </ScrollView>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 200 }}
+      >
         <ViewControls />
         <ChartGraph />
+        <TradeBook onPress={() => bottomSheetRef.current?.expand()} />
+        <TradePanel refProp={bottomSheetRef} />
       </ScrollView>
     </ThemedView>
   );

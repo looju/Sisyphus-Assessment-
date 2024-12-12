@@ -43,7 +43,16 @@ const ViewControls = () => {
                   borderRadius: 10,
                 }}
               >
-                <ThemedText onPress={() => setActiveIndex(index)}>
+                <ThemedText
+                  onPress={() => setActiveIndex(index)}
+                  style={{
+                    color: isActive
+                      ? Colors.white
+                      : colors == "dark"
+                      ? Colors.white
+                      : Colors.black,
+                  }}
+                >
                   {item.name}
                 </ThemedText>
               </View>

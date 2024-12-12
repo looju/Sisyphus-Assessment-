@@ -135,7 +135,7 @@ export default function ChartGraph() {
 
 const styles = StyleSheet.create({
   main: {
-    height: "100%",
+    height: "70%",
   },
   candleStick: {
     flexDirection: "row",
