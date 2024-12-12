@@ -40,6 +40,7 @@ const TradePanel = ({ refProp }: RefProps) => {
     style: "currency",
     currency: "USD",
   });
+  const android = Platform.OS === "android";
 
   const Transact = () => {
     //integrate with server

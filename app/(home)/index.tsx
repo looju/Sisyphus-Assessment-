@@ -6,6 +6,7 @@ import {
   useColorScheme,
   Image,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import CustomHeader from "@/components/CustomHeader";
@@ -30,6 +31,7 @@ const MainScreen = () => {
   const [coinDisplayName, setCoinDisplayName] = useState("BTC/USD");
   const addCoinToStore = useCoinStore((state) => state.addCoin);
   const addPriceToStore = useCoinStore((state) => state.addPrice);
+  const android = Platform.OS === "android";
 
   useEffect(() => {
     axios
@@ -51,6 +53,7 @@ const MainScreen = () => {
       style={{
         flex: 1,
         backgroundColor: colors == "dark" ? Colors.dark : Colors.white,
+        top: android ? 50 : 0,
       }}
     >
       {coinData.length == 0 ? (
