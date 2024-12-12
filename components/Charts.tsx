@@ -15,6 +15,7 @@ import { iconNames } from "../constants/Dummies";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
 import ViewControls from "./ViewControls";
+import ChartGraph from "./ChartGraph";
 
 const Charts = () => {
   const colors = useColorScheme();
@@ -121,6 +122,7 @@ const Charts = () => {
         </>
       </ScrollView>
       <ViewControls />
+      <ChartGraph />
     </ThemedView>
   );
 };
