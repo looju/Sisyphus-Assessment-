@@ -1,182 +1,81 @@
-import React, { FC } from "react";
-import Svg from "react-native-svg";
-import * as d3 from "d3-scale";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  useDerivedValue,
-} from "react-native-reanimated";
-import { StyleSheet, View } from "react-native";
-import Candle from "./Candle";
-import StripLine from "./StripLine";
-import { ReText } from "react-native-redash";
-import { useTheme } from "@react-navigation/native";
-import { FONTS } from "../../../constants/Fonts";
-import { RFValue } from "react-native-responsive-fontsize";
-import { convertUnixTimeWorklet } from "../../../utils/ValidationUtils";
-import { formatPaisaWorklet } from "../../../utils/NumberUtils";
-import PointerValuesGroup from "./PointerValuesGroup";
-import { screenWidth } from "../../../utils/Scaling";
+import { Dimensions, StyleSheet, useColorScheme } from "react-native";
+import { CandlestickChart } from "react-native-wagmi-charts";
+import data from "@/mock/Data.json";
+import Colors from "@/constants/Colors";
+import { ThemedView } from "./ThemedView";
+import { useCoinStore } from "@/Store/useCoinSelection";
+import { ThemedText } from "./ThemedText";
+import { generateIntervalsOf } from "@/utils/NumberUtils";
+const width = Dimensions.get("screen").width;
 
-const ChartGraph: FC<{ data: any[]; height: number; width: number }> = ({
-  data,
-  height,
-  width,
-}) => {
-  const { colors } = useTheme();
-  const opacity = useSharedValue(0);
-
-  const chartHeight = height;
-  const candleWidth = screenWidth * 0.012;
-
-  const candleCount = data?.length;
-  const candleTotalWidth = candleWidth * candleCount;
-  const candleXSpacing = (width - candleTotalWidth) / (candleCount - 1);
-
-  const scaleY = d3
-    .scaleLinear()
-    .domain([
-      Math.min(...data?.map((d) => d.low)),
-      Math.max(...data?.map((d) => d.high)),
-    ])
-    .range([chartHeight, 0]);
-
-  const position = useSharedValue(0);
-  const textPad = useSharedValue(0);
-
-  const panGesture = Gesture.Pan()
-    .onUpdate((e) => {
-      const candleIndex = Math.floor(
-        (e.x + candleXSpacing / 2) / (candleWidth + candleXSpacing)
-      );
-      const newX = candleIndex * (candleWidth + candleXSpacing) + 2;
-      position.value = newX;
-      textPad.value = e.x < 80 ? 0 : e.x > 260 ? -100 : -50;
-      opacity.value = 1;
-    })
-    .onTouchesDown((e) => {
-      opacity.value = 0;
-    });
-
-  const reTextAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    marginLeft: textPad.value,
-  }));
-
-  const pointValueStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    display: opacity.value == 0 ? "none" : "flex",
-  }));
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    transform: [{ translateX: position.value }],
-  }));
-
-  const formatData = (value: any) => {
-    "worklet";
-    if (!value) {
-      return "";
-    }
-    const time = value?.time;
-    return `₹${value.close} | ${convertUnixTimeWorklet(time)}`;
-  };
-
-  const scaleYInvert = (y: number) => {
-    "worklet";
-    const hoveredIndex = Math.floor(
-      (position.value + candleXSpacing / 2) / (candleWidth + candleXSpacing)
-    );
-    return data[hoveredIndex];
-  };
-
-  const text = useDerivedValue(() => {
-    const data = scaleYInvert(position.value);
-    return formatData(data);
-  });
-
-  const closeValue = useDerivedValue(() => {
-    const data = scaleYInvert(position.value);
-    return formatPaisaWorklet(data?.close);
-  });
-
-  const openValue = useDerivedValue(() => {
-    const data = scaleYInvert(position.value);
-    return formatPaisaWorklet(data?.open);
-  });
-
-  const lowValue = useDerivedValue(() => {
-    const data = scaleYInvert(position.value);
-    return formatPaisaWorklet(data?.low);
-  });
-
-  const highValue = useDerivedValue(() => {
-    const data = scaleYInvert(position.value);
-    return formatPaisaWorklet(data?.high);
-  });
-
-  return (
-    <View>
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFill,
-          {
-            backgroundColor: colors.background,
-            top: -180,
-            width: screenWidth,
-            left: -20,
-            padding: 20,
-            right: 0,
-            alignSelf: "center",
-          },
-          pointValueStyle,
-        ]}
-      >
-        <PointerValuesGroup
-          openValue={openValue}
-          closeValue={closeValue}
-          highValue={highValue}
-          lowValue={lowValue}
-        />
-      </Animated.View>
-      <View>
-        <Svg width={width} height={chartHeight}>
-          {data?.map((candle, index) => (
-            <Candle
-              key={index}
-              data={candle}
-              color="white"
-              scaleY={scaleY}
-              candleWidth={candleWidth}
-              candleX={index * candleWidth + index * candleXSpacing}
-            />
-          ))}
-        </Svg>
-
-        <GestureDetector gesture={panGesture}>
-          <Animated.View style={[StyleSheet.absoluteFill]}>
-            <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
-              <StripLine y={height} />
-              <Animated.View
-                style={[StyleSheet.absoluteFill, reTextAnimatedStyle]}
-              >
-                <ReText
-                  style={{
-                    color: colors.text,
-                    fontFamily: FONTS.Regular,
-                    fontSize: RFValue(9),
-                    top: -20,
-                  }}
-                  {...{ text }}
-                />
-              </Animated.View>
-            </Animated.View>
-          </Animated.View>
-        </GestureDetector>
-      </View>
-    </View>
+export default function ChartGraph() {
+  const colors = useColorScheme();
+  const prices = useCoinStore((state) => state.prices);
+  const coinName = useCoinStore((state) => state.coin);
+  const multiple = prices[0].high / 20;
+  const pricesLogs = generateIntervalsOf(
+    Number(multiple),
+    0,
+    Number(prices[0].high)
   );
-};
 
-export default ChartGraph;
+  const formatter = new Intl.NumberFormat("en-US");
+  return (
+    <>
+      <ThemedView style={styles.main}>
+        <CandlestickChart.Provider data={data}>
+          <CandlestickChart width={width * 0.85}>
+            <CandlestickChart.Candles
+              positiveColor={Colors.positive}
+              negativeColor={Colors.negative}
+            />
+            <ThemedView style={{}}>
+              <CandlestickChart.DatetimeText
+                type="close"
+                style={{
+                  color: colors == "dark" ? Colors.white : Colors.black,
+                }}
+              />
+            </ThemedView>
+            <CandlestickChart.Crosshair>
+              <CandlestickChart.Tooltip />
+            </CandlestickChart.Crosshair>
+          </CandlestickChart>
+        </CandlestickChart.Provider>
+        <ThemedView
+          style={[
+            styles.verticalBar,
+            { borderColor: colors == "dark" ? Colors.white : Colors.black },
+          ]}
+        >
+          {pricesLogs.reverse().map((prices) => {
+            const decimal = (Math.round(prices * 100) / 100).toFixed(2);
+            const formattedDecimal = formatter.format(Number(decimal));
+            return (
+              <ThemedText style={styles.text}>-{formattedDecimal}</ThemedText>
+            );
+          })}
+        </ThemedView>
+      </ThemedView>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  main: {
+    top: "10%",
+    flexDirection: "row",
+  },
+  verticalBar: {
+    flex: 1,
+    alignSelf: "flex-end",
+    height: "100%",
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  text: {
+    fontSize: 10,
+  },
+});

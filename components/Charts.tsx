@@ -16,6 +16,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
 import ViewControls from "./ViewControls";
 import ChartGraph from "./ChartGraph";
+import { screenHeight, screenWidth } from "@/utils/Scaling";
 
 const Charts = () => {
   const colors = useColorScheme();
@@ -23,6 +24,7 @@ const Charts = () => {
   const [iconsActiveIndex, setIconsActiveIndex] = useState<null | number>(null);
   const [isFocus, setIsFocus] = useState(false);
   const [timeFrame, setTimeFrame] = useState("1M");
+  const height = screenHeight * 0.28;
   return (
     <ThemedView style={[styles.main]}>
       <ScrollView contentContainerStyle={styles.tradingView} horizontal>

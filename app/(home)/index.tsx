@@ -28,13 +28,18 @@ const MainScreen = () => {
   const [iconSource, setIconSource] = useState();
   const [isFocus, setIsFocus] = useState(false);
   const addCoinToStore = useCoinStore((state) => state.addCoin);
+  const addPriceToStore = useCoinStore((state) => state.addPrice);
 
   useEffect(() => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    axios
+      .get(`${Base_url}/coins/${coinName}/ohlcv/today`)
+      .then((res) => addPriceToStore(res.data))
+      .catch((error) => {
+        console.log(error, "Error calling daily prices");
+      });
+  }, [coinName]);
+
+  useEffect(() => {
     axios
       .get(`${Base_url}/tickers/${coinName}`)
       .then((res) => setCoinData(res.data))

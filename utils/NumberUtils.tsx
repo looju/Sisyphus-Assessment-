@@ -38,6 +38,21 @@ export const getSignPaisa = (number: number): signPaisaProps => {
   };
 };
 
+export function generateIntervalsOf(
+  interval: number,
+  start: number,
+  end: number
+) {
+  const result = [];
+  let current = start;
+
+  while (current < end) {
+    result.push(current);
+    current += interval;
+  }
+
+  return result;
+}
 export const hexToRGBA = (hex: string, opacity: number) => {
   hex = hex.replace("#", "");
 

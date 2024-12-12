@@ -20,4 +20,6 @@ export default {
   neon: "rgba(32,37,43,1)",
   skyBlue: "rgba(72,58,235,1)",
   lightRed: "rgba(221,86,141,1)",
+  positive: "rgba(0, 192,18,1)",
+  negative: "rgba(225,104,56,1)",
 };
